@@ -35,8 +35,8 @@ public class Credit implements Serializable {
     private Compte compteCredit;
     @ManyToOne
     private PackCredit packCredit;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy="credit")
-    private Set<Garantie> garanties;
+    @OneToOne(cascade = CascadeType.ALL, mappedBy="credit")
+    private Garantie garantie;
 
 
 
