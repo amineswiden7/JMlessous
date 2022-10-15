@@ -27,6 +27,6 @@ public class Garantie  implements Serializable {
     @Temporal (TemporalType.DATE)
     private Date date;
     private String etat;
-    @ManyToOne
+    @OneToOne
     private Credit credit;
 }
