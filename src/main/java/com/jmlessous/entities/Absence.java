@@ -27,6 +27,7 @@ public class Absence  implements Serializable {
     @Temporal (TemporalType.DATE)
     private Date dateFin;
     private String motif ;
+    @Enumerated(EnumType.STRING)
     private TypeAbsence typeAbsence;
     @ManyToOne()
     private Utilisateur utilisateursAbsence;
