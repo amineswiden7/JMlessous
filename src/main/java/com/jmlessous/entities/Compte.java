@@ -7,6 +7,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
@@ -23,20 +26,23 @@ public  class Compte  {
     @Id
     @Column(name ="numCompte")
     @GeneratedValue(strategy = GenerationType.TABLE)
-
     private Long numCompte;
-
     private Float solde;
     private Long rib;
     private String iban;
     @Temporal (TemporalType.DATE)
     private Date dateOuverture;
+    private boolean state;
+    @JsonIgnore
     @ManyToOne
     private Utilisateur utilisateurC;
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy="compteCredit")
     private Set<Credit> credits;
+    @JsonIgnore
     @ManyToMany(mappedBy="comptesTransaction", cascade = CascadeType.ALL)
     private Set<Transaction> transactions;
 
+    
 
 }
