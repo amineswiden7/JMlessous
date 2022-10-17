@@ -28,6 +28,6 @@ public class Absence  implements Serializable {
     private Date dateFin;
     private String motif ;
     private TypeAbsence typeAbsence;
-    @ManyToMany()
-    private Set<Utilisateur> utilisateursAbsence;
+    @ManyToOne()
+    private Utilisateur utilisateursAbsence;
 }

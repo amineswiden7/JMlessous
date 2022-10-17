@@ -49,7 +49,7 @@ public class Utilisateur implements Serializable, UserDetails {
     private Set<Compte> comptes;
     @ManyToMany(mappedBy="utilisateursFormation", cascade = CascadeType.ALL)
     private Set<Formation> formations;
-    @ManyToMany(mappedBy="utilisateursAbsence", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy="utilisateursAbsence", cascade = CascadeType.ALL)
     private Set<Absence> absences;
     @OneToMany(cascade = CascadeType.ALL, mappedBy="utilisateurCA")
     private Set<ContratAssurance> contratAssurances;
