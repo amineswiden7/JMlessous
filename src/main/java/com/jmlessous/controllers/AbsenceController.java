@@ -4,6 +4,10 @@ import com.jmlessous.entities.Absence;
 import com.jmlessous.services.IAbsenceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -12,7 +16,7 @@ import java.util.List;
 public class AbsenceController {
     @Autowired
     IAbsenceService abs;
-    //http://localhost:8083/JMLessous/Absence/retrieve-all-Absence
+    //http://localhost:8083//JMLessous/Absence/retrieve-all-Absence
     @GetMapping("/retrieve-all-Absence")
     @ResponseBody
     public List<Absence> getAbsence() {
