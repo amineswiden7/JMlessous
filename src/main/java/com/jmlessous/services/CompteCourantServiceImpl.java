@@ -28,31 +28,30 @@ public class CompteCourantServiceImpl implements ICompteService{
 		comptecourantRepository.save(c);
 		return c;
 	}
-
+	
 	@Override
 	public List<CompteCourant> retrieveAllAccountsC() {
 		return  (List<CompteCourant>)comptecourantRepository.findAll();
 	}
-
+	
 	@Override
 	public CompteCourant updateAccountC(CompteCourant u) {
 		comptecourantRepository.save(u);
 		return u;
 	}
-
+	
 	@Override
 	public CompteCourant retrieveAccount(Long idCourant) {
 		CompteCourant comptecourant = comptecourantRepository.findById(idCourant).orElse(null);
 		return (comptecourant);
 	}
-
+	
 	@Override
 	public void deleteAccount(Long id) {
 		comptecourantRepository.deleteById(id);
 		
 	}
-
-
+	
 	@Override
 	public CompteCourant ArchiveCompteC(Long id) {
 		CompteCourant cc = comptecourantRepository.findById(id).orElse(null);

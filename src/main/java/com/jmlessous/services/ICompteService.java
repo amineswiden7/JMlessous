@@ -5,6 +5,7 @@ import java.util.Set;
 
 import com.jmlessous.entities.Compte;
 import com.jmlessous.entities.CompteCourant;
+import com.jmlessous.entities.CompteEpargne;
 import com.jmlessous.entities.Transaction;
 
 public interface ICompteService {
@@ -15,6 +16,8 @@ CompteCourant updateAccountC(CompteCourant u);
 CompteCourant retrieveAccount(Long id);
 void deleteAccount(Long id);
 CompteCourant ArchiveCompteC(Long id);
+
+
 	//public String GenerateRib() ; 
 	//public List<Transaction> retrieveAllTransactionsEmisesByRib(Long rib) ;
 	//public List<Transaction> retrieveAllTransactionsRecuesByRib(Long rib) ;
