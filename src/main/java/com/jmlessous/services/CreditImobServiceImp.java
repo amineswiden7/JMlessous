@@ -18,7 +18,7 @@ public class CreditImobServiceImp implements ICreditImobService {
 
     @Override
     public List<CreditImmobilier> retrieveAllCredit() {
-        return null;
+        return (List<CreditImmobilier>) cr.findAll();
     }
 
     @Override
@@ -28,13 +28,20 @@ public class CreditImobServiceImp implements ICreditImobService {
         CompteCourant c = cp.getCompteByUser(id_User);
         a.setCompteCredit(c);
         a.setDateDemande(new Date());
-        if (uu.getCreditAuthorization() == null) {   //(client nouveau)
+        if (uu.getCreditAuthorization() == true) {   //(client nouveau)
             //NB LE TAUX DE RISQUE 1%<R<2.5%
             if (1.5 * (a.getGarantie().getValeur()+(uu.getSalaire()*12)) >= a.getMontantCredit()) {
                 //CALCUL RISK
                 a.setRisque((float) (0.01 + a.getMontantCredit() / ((a.getGarantie().getValeur()+uu.getSalaire()*12) * 100)));
-                uu.setCreditAuthorization(true);
+               // uu.setCreditAuthorization(true);
                 //Acceptation(credit,fund,"NouveauClient avec garant certifié");
+                if(a.getRisque()< 1){
+
+
+
+
+                }
+
 
             } else {
                 a.setSTATUS(Status.REFUS);
@@ -42,18 +49,19 @@ public class CreditImobServiceImp implements ICreditImobService {
             }
 
         }
-    
 
 
 
 
 
-        return null;
+
+
+            return null;
 }
 
     @Override
-    public List<Credit> retrieveAbsenceByUser(Long id_user) {
-        return null;
+    public List<Credit> retrieveCreditByUser(Long id_user) {
+        return cr.getCreditByUser(id_user);
     }
 
     @Override

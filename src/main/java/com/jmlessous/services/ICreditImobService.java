@@ -11,7 +11,7 @@ public interface ICreditImobService {
 
     CreditImmobilier addCredit(Credit a , Long id_User);
 
-    List<Credit> retrieveAbsenceByUser(Long id_user);
+    List<Credit> retrieveCreditByUser(Long id_user);
 
     Credit Archive(Long Id_credit);
     Credit retrieveActiveCredit(Long id_User);
