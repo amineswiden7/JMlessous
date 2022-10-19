@@ -2,5 +2,5 @@ package com.jmlessous.entities;
 
 public enum Status {
     ENCOURSDETRAITEMENT,
-    PAIEMENTENCOURS, TERMINE
+    PAIEMENTENCOURS, TERMINE, REFUS
 }

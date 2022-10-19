@@ -32,6 +32,8 @@ public abstract class Credit implements Serializable {
     private Date dateFin;
     private Float mensualite;
     private Status STATUS;
+    private float risque;
+    private String Motif ;
     @ManyToOne
     private CompteCourant compteCredit;
     /*@ManyToOne

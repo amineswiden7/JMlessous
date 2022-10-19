@@ -39,6 +39,7 @@ public class Utilisateur implements Serializable, UserDetails {
     private String adresse;
     private Role role;
     private Float rib ;
+    private Boolean creditAuthorization;
     @ManyToMany()
     private Set<Message> messages;
     @ManyToMany(mappedBy="utilisateurs", cascade = CascadeType.ALL)
