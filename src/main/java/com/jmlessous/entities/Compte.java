@@ -36,9 +36,7 @@ public  abstract class Compte  {
     @JsonIgnore
     @ManyToOne
     private Utilisateur utilisateurC;
-    @JsonIgnore
-    @OneToMany(cascade = CascadeType.ALL, mappedBy="compteCredit")
-    private Set<Credit> credits;
+
     @JsonIgnore
     @ManyToMany(mappedBy="comptesTransaction", cascade = CascadeType.ALL)
     private Set<Transaction> transactions;
