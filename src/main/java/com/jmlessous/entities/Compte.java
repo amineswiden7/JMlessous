@@ -22,7 +22,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 
-public  class Compte  {
+public  abstract class Compte  {
     @Id
     @Column(name ="numCompte")
     @GeneratedValue(strategy = GenerationType.TABLE)

@@ -18,7 +18,7 @@ import java.util.Set;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Credit implements Serializable {
+public abstract class Credit implements Serializable {
     @Id
     @Column(name ="idCredit ")
     @GeneratedValue(strategy = GenerationType.TABLE)
