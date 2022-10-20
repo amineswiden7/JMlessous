@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import com.jmlessous.entities.Compte;
 import com.jmlessous.entities.CompteCourant;
+import com.jmlessous.entities.CompteEpargne;
 import com.jmlessous.entities.Utilisateur;
+import com.jmlessous.services.ICompteEService;
 import com.jmlessous.services.ICompteService;
 import com.jmlessous.services.IUtilisateurService;
 
@@ -23,6 +25,11 @@ public class CompteController {
     IUtilisateurService utilisateurService;
 	@Autowired
     ICompteService compteService;
+	@Autowired
+    ICompteEService compteEService;
+	
+	public String RibC = ""; 
+
 
 	//http://localhost:8083/JMLessous/Listaccounts
 		@GetMapping("/Listaccounts")
@@ -61,4 +68,59 @@ public class CompteController {
 		return compteService.ArchiveCompteC(idc);
 		}
 		
+		//CE
+		
+		//http://localhost:8083/JMLessous/ListaccountsE
+				@GetMapping("/ListaccountsE")
+				@ResponseBody
+				public List<CompteEpargne> getAllAcountsE() {
+					List <CompteEpargne> list=compteEService.retrieveAllAccountsE();
+					return list ; 
+				} 
+				
+			//http://localhost:8083/JMLessous/AddAccountE
+			@PostMapping("/AddAccountE/{idUser}")
+			@ResponseBody
+			public Compte AddAccountE (@RequestBody CompteEpargne e ,@PathVariable ("idUser")  Long idUser)
+			{
+				return compteEService.addAccountE(e,idUser) ;
+			}
+			
+			 // http://localhost:8083/JMLessous/modify-AccountE
+				@PutMapping("/modify-AccountE")
+				@ResponseBody
+				public CompteEpargne modifyAccountE(@RequestBody CompteEpargne accountE) {
+				return compteEService.updateAccountE(accountE);
+				}
+			
+			//http://localhost:8083/JMLessous/DeleteAccountE/1
+				@DeleteMapping("/DeleteAccountE/{idace}")
+				@ResponseBody
+				public void deleteAccE (@PathVariable("idace") Long idace ) {
+					compteEService.deleteAccount(idace);
+				}
+				
+			//http://localhost:8083/JMLessous/archive-cptE/1
+				@PutMapping("/archive-cptE/{c-id}")
+				@ResponseBody
+				public CompteEpargne ArchiveCompteE(@PathVariable("e-id") Long ide) {
+				return compteEService.ArchiveCompteE(ide);
+				}
+				
+				//http://localhost:8083/JMLessous/jereb1/	
+				@GetMapping("/jereb1")
+						@ResponseBody
+						public String generateRib ()
+						{
+					this.RibC = compteService.GenerateRibC();
+							return this.RibC ;
+						}
+				
+				//http://localhost:8083/JMLessous/jereb2/	
+				@GetMapping("/jereb2")
+						@ResponseBody
+						public String generateIBan ()
+						{
+							return compteService.GenerateIBanC(this.RibC);
+						}
 }

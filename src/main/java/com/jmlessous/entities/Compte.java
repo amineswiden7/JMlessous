@@ -28,7 +28,7 @@ public  class Compte  {
     @GeneratedValue(strategy = GenerationType.TABLE)
     private Long numCompte;
     private Float solde;
-    private Long rib;
+    private String rib;
     private String iban;
     @Temporal (TemporalType.DATE)
     private Date dateOuverture;
