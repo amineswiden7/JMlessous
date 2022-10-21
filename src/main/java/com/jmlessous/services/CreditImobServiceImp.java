@@ -6,6 +6,8 @@ import com.jmlessous.repositories.CreditImobRepository;
 import com.jmlessous.repositories.UtilisateurRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.time.Instant;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
 
@@ -24,28 +26,41 @@ public class CreditImobServiceImp implements ICreditImobService {
     @Override
     public CreditImmobilier addCredit(Credit a, Long id_User) {
         Utilisateur uu = u.findById(id_User).orElse(null);
-
         CompteCourant c = cp.getCompteByUser(id_User);
         a.setCompteCredit(c);
         a.setDateDemande(new Date());
-        if (uu.getCreditAuthorization() == true) {   //(client nouveau)
+        a.setTaux((float) 0.05);
+        float montant=a.getMontantCredit();
+        float tauxmensuel=a.getTaux()/12;
+        float period= a.getDuree()*12;
+        float mensualite=(float) ((montant*tauxmensuel)/(1-(Math.pow((1+tauxmensuel),-period ))));
+        a.setMensualite(mensualite);
+       // a.setMensualite(100F);
+        float ratio = a.getMensualite()/uu.getSalaire();
+        if (uu.getCreditAuthorization() == true) {   //
             //NB LE TAUX DE RISQUE 1%<R<2.5%
-            if (1.5 * (a.getGarantie().getValeur()+(uu.getSalaire()*12)) >= a.getMontantCredit()) {
+            if (ratio<=0.4) {
                 //CALCUL RISK
-                a.setRisque((float) (0.01 + a.getMontantCredit() / ((a.getGarantie().getValeur()+uu.getSalaire()*12) * 100)));
+                a.setTaux((float) (0.05+(ratio/20)));
+                float montantt=a.getMontantCredit();
+                float tauxmensuell=a.getTaux()/12;
+                float periodd= a.getDuree()*12;
+                float mensualitee=(float) ((montantt*tauxmensuell)/(1-(Math.pow((1+tauxmensuell),-periodd ))));
+                a.setMensualite(mensualitee);
+               // a.setMensualite(200F);
                // uu.setCreditAuthorization(true);
                 //Acceptation(credit,fund,"NouveauClient avec garant certifié");
-                if(a.getRisque()< 1){
+               a.setSTATUS(Status.ACCEPTE);
+                a.setDateFin(java.sql.Date.valueOf(Instant.ofEpochMilli(a.getDateDemande().getTime())
+                        .atZone(ZoneId.systemDefault())
+                        .toLocalDate().plusMonths((long) (periodd))));
 
-
-
-
-                }
 
 
             } else {
                 a.setSTATUS(Status.REFUS);
-                a.setMotif("montant guarantie insuffisant il doit etre egale à 0.33*montant du crédit");
+
+                a.setMotif("montant guarantie insuffisant il doit etre égale au minimum 40% d'écheance de crédit");
             }
 
         }

@@ -32,7 +32,8 @@ public class Utilisateur implements Serializable, UserDetails {
     private Date dateNaissance;
     private Long  téléphone;
     private Float  salaire;
-    private String profession;
+    @Enumerated(EnumType.STRING)
+    private Profession profession;
     private String email;
     private String login;
     private String motDePasse;
