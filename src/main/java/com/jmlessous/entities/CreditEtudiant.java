@@ -15,6 +15,8 @@ import java.io.Serializable;
 @Table(name = "CREDIT_ETUDIANT")
 
 public class CreditEtudiant extends Credit implements Serializable {
+
+
     private Float tauxInteret;
     @Enumerated(EnumType.STRING)
     private ProfessionParent Profession;

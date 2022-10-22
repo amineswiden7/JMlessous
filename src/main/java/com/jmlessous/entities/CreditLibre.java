@@ -14,6 +14,8 @@ import java.io.Serializable;
 
 public class CreditLibre extends Credit implements Serializable {
 
+
+
     private Float tauxInteret;
 
 }

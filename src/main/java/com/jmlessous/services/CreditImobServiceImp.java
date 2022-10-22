@@ -29,9 +29,9 @@ public class CreditImobServiceImp implements ICreditImobService {
         CompteCourant c = cp.getCompteByUser(id_User);
         a.setCompteCredit(c);
         a.setDateDemande(new Date());
-        a.setTaux((float) 0.05);
+
         float montant=a.getMontantCredit();
-        float tauxmensuel=a.getTaux()/12;
+        float tauxmensuel=12;
         float period= a.getDuree()*12;
         float mensualite=(float) ((montant*tauxmensuel)/(1-(Math.pow((1+tauxmensuel),-period ))));
         a.setMensualite(mensualite);
@@ -41,9 +41,10 @@ public class CreditImobServiceImp implements ICreditImobService {
             //NB LE TAUX DE RISQUE 1%<R<2.5%
             if (ratio<=0.4) {
                 //CALCUL RISK
-                a.setTaux((float) (0.05+(ratio/20)));
+                //a.setTaux((float) (0.05+(ratio/20)));
                 float montantt=a.getMontantCredit();
-                float tauxmensuell=a.getTaux()/12;
+                //float tauxmensuell=a.getTaux()/12;
+                float tauxmensuell=12;
                 float periodd= a.getDuree()*12;
                 float mensualitee=(float) ((montantt*tauxmensuell)/(1-(Math.pow((1+tauxmensuell),-periodd ))));
                 a.setMensualite(mensualitee);
