@@ -20,6 +20,7 @@ public interface ICreditEtu {
     float Calcul_mensualite(CreditEtudiant cr);
     void ActiverCredit(Long a);
     Hashtable<String,Double> simulation(float montant,float periode, NiveauEtude typeEtudiant);
+    Double Scoring(float montant,float periode, NiveauEtude typeEtu);
 
 
 

@@ -58,6 +58,8 @@ public class CreditEtuServiceImp implements ICreditEtu {
                 float tauxmensuel = a.getTauxInteret() / 12;
                 float period = a.getDuree() * 12;
                 float mensualite = (float) ((montant * tauxmensuel) / (1 - (Math.pow((1 + tauxmensuel), -period))));
+                double sc = Scoring(montant, period, a.getNiveauEtude());
+                a.setScore(sc);
                 a.setMensualite(mensualite);
                 a.setSTATUS(Status.ENCOURSDETRAITEMENT);
                 a.setFinC(false);
@@ -65,6 +67,11 @@ public class CreditEtuServiceImp implements ICreditEtu {
                 a.setDateDemande(new Date());
                 a.setCompteCredit(cc.getCompteByUser(idUser));
                 etu.save(a);
+                if(a.getScore()<30){
+                    a.setSTATUS(Status.REFUS);
+                    a.setMotif("Risque trés éleve ");
+
+                }
                 return a;
             }
         }
@@ -110,34 +117,34 @@ public class CreditEtuServiceImp implements ICreditEtu {
     public Hashtable<String, Double> simulation(float montant, float periode, NiveauEtude typeEtudiant) {
         Hashtable<String, Double> sim = new Hashtable<String, Double>();
         double mensuality;
-        double crd;
-        crd = montant;
+        double MontantRestant;
+        MontantRestant = montant;
         double interest = 0.01;//score personel manquant
         //interest=interest/100;
         // System.out.println("interest "+ interest );
         switch (typeEtudiant) {
             case LICENCE: {
                 interest = 0.02;
-                System.out.println("interest " + interest);
+                System.out.println("interet " + interest);
                 mensuality = (montant * interest) / (1 - Math.pow(1 + interest, -periode));
 
                 sim.put("Mensuality", Double.parseDouble(df.format(mensuality)));
-                System.out.println("Mensuality : " + Double.parseDouble(df.format(mensuality)));
-                System.out.println("montant : " + montant);
-                sim.put("CRD 1", crd);
-                sim.put("I 1", crd * interest);
-                sim.put("P 1", mensuality - (crd * interest));
+                System.out.println("Mensualite : " + Double.parseDouble(df.format(mensuality)));
+                System.out.println("MontantRestant : " + montant);
+                sim.put("MontantRestant 1", MontantRestant);
+                sim.put("Interet 1", MontantRestant * interest);
+                sim.put("Principal 1", mensuality - (MontantRestant * interest));
                 //  System.out.println("CRD 1 :"+Double.parseDouble(df.format(crd)));
                 // System.out.println("CRD 1 :"+df.format(crd));
 
                 for (int i = 2; i <= periode; i++) {
-                    double interet = crd * interest;
-                    sim.put("I " + i, interet);
+                    double interet = MontantRestant * interest;
+                    sim.put("interet " + i, interet);
                     double principal = mensuality - interet;
-                    sim.put("P " + i, principal);
-                    crd = crd - principal;
-                    sim.put("CRD " + i, Double.parseDouble(df.format(crd)));
-                    System.out.println("CRD " + i + " : " + Double.parseDouble(df.format(crd)));
+                    sim.put("Principal " + i, principal);
+                    MontantRestant = MontantRestant - principal;
+                    sim.put("MontantRestant " + i, Double.parseDouble(df.format(MontantRestant)));
+                    System.out.println("MontantRestant " + i + " : " + Double.parseDouble(df.format(MontantRestant)));
                 }
             }
             break;
@@ -146,22 +153,22 @@ public class CreditEtuServiceImp implements ICreditEtu {
                 System.out.println("interest " + interest);
                 mensuality = (montant * interest) / (1 - Math.pow(1 + interest, -periode));
 
-                sim.put("Mensuality", Double.parseDouble(df.format(mensuality)));
-                System.out.println("Mensuality : " + mensuality);
-                System.out.println("amount : " + montant);
-                sim.put("CRD 1", crd);
-                System.out.println("CRD 1 :" + Double.parseDouble(df.format(crd)));
-                sim.put("I 1", crd * interest);
-                sim.put("P 1", mensuality - (crd * interest));
+                sim.put("Mensualite", Double.parseDouble(df.format(mensuality)));
+                System.out.println("Mensualite : " + mensuality);
+                System.out.println("MontantRestant : " + montant);
+                sim.put("MontantRestant 1", MontantRestant);
+                System.out.println("MontantRestant 1 :" + Double.parseDouble(df.format(MontantRestant)));
+                sim.put("Interet 1", MontantRestant * interest);
+                sim.put("Principal 1", mensuality - (MontantRestant * interest));
 
                 for (int i = 2; i <= periode; i++) {
-                    double interet = crd * interest;
-                    sim.put("I " + i, interet);
+                    double interet = MontantRestant * interest;
+                    sim.put("Interet " + i, interet);
                     double principal = mensuality - interet;
-                    sim.put("P " + i, principal);
-                    crd = crd - principal;
-                    sim.put("CRD " + i, crd);
-                    System.out.println("CRD " + i + " : " + Double.parseDouble(df.format(crd)));
+                    sim.put("Pprincipal " + i, principal);
+                    MontantRestant = MontantRestant - principal;
+                    sim.put("MontantRestant " + i, MontantRestant);
+                    System.out.println("MontantRestant " + i + " : " + Double.parseDouble(df.format(MontantRestant)));
                 }
             }
             break;
@@ -170,23 +177,23 @@ public class CreditEtuServiceImp implements ICreditEtu {
                 System.out.println("interest " + interest);
                 mensuality = (montant * interest) / (1 - Math.pow(1 + interest, -periode));
 
-                sim.put("Mensuality", Double.parseDouble(df.format(mensuality)));
-                System.out.println("Mensuality : " + mensuality);
-                System.out.println("amount : " + montant);
-                sim.put("CRD 1", crd);
-                System.out.println("CRD 1 :" + Double.parseDouble(df.format(crd)));
-                sim.put("I 1", crd * interest);
-                sim.put("P 1", mensuality - (crd * interest));
+                sim.put("Mensualite", Double.parseDouble(df.format(mensuality)));
+                System.out.println("Mensualite : " + mensuality);
+                System.out.println("montant : " + montant);
+                sim.put("MontantRestant 1", MontantRestant);
+                System.out.println("MontantRestant 1 :" + Double.parseDouble(df.format(MontantRestant)));
+                sim.put("Interet 1", MontantRestant * interest);
+                sim.put("Principal 1", mensuality - (MontantRestant * interest));
 
                 for (int i = 2; i <= periode; i++) {
-                    crd = crd - (mensuality - (crd * interest));
-                    sim.put("CRD " + i, crd);
-                    System.out.println("CRD " + i + " : " + Double.parseDouble(df.format(crd)));
+                    MontantRestant = MontantRestant - (mensuality - (MontantRestant * interest));
+                    sim.put("MontantRestant " + i, MontantRestant);
+                    System.out.println("MontantRestant " + i + " : " + Double.parseDouble(df.format(MontantRestant)));
                 }
             }
             break;
             default: {
-                System.out.println("Invalid Type");
+                System.out.println("Niveau d'etude incorrect ");
             }
         }
 
@@ -194,8 +201,51 @@ public class CreditEtuServiceImp implements ICreditEtu {
         return sim;
     }
 
+    @Override
+    public Double Scoring(float montant, float periode, NiveauEtude typeEtu) {
+        double score = 0;
+        double revenuprévu = 0;
+        double taux = 0;
+        double mensualite = 0;
+        switch (typeEtu) {
+            case LICENCE: {
+                revenuprévu = 800;
+                taux = (float) 0.03;
 
+
+            }break;
+            case MASTER: {
+                revenuprévu = 1000;
+                taux = (float) 0.025;
+
+
+            }break;
+            case INGENIERIE: {
+                revenuprévu = 1500;
+                taux = (float) 0.02;
+            } break;
+        default: {score = 0;}
+    }
+
+            mensualite = (montant * taux) / (1 - Math.pow(1 + taux, -periode * 12));
+            if (montant > 10000)
+                score = 0;
+            else if (montant <= 10000)
+                score = 100 * (1-(mensualite / revenuprévu));
+
+
+
+        System.out.println(revenuprévu);
+        System.out.println(taux);
+        System.out.println("Mensualite : " + Double.parseDouble(df.format(mensualite)));
+
+
+        return score;
+    }
 }
+
+
+
 
 
 

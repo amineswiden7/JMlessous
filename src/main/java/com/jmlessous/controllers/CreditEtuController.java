@@ -44,6 +44,10 @@ public class CreditEtuController {
     public Hashtable<String, Double> Simulation(@PathVariable float amount, @PathVariable float period, @PathVariable NiveauEtude typePeriod ){
         return creditEtu.simulation(amount,period,typePeriod);
     }
+    @GetMapping("score/{amount}/{period}/{typePeriod}")
+    public Double scoring(@PathVariable float amount, @PathVariable float period, @PathVariable NiveauEtude typePeriod ){
+        return creditEtu.Scoring(amount,period,typePeriod);
+    }
 
 
 
