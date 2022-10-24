@@ -17,7 +17,14 @@ public class CompteEpargne  extends Compte implements Serializable  {
     @Column(name ="idEpargne ")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idEpargne ;*/
-    private Float tauxRemuneration;
+	//private int index_remuneration;
+    private float tauxRemuneration;
+    private float vercementInitial ;
+    private float vercementRegulier;
+    @Temporal (TemporalType.DATE)
+    private Date duree;
+    private float totalVercement;
+    private float interetAcquis;
 
 
 }

@@ -19,8 +19,8 @@ CompteCourant ArchiveCompteC(Long id);
 public String GenerateRibC() ; 
 public String GenerateIBanC(String RibC);
 
+
 	//public List<Transaction> retrieveAllTransactionsEmisesByRib(Long rib) ;
 	//public List<Transaction> retrieveAllTransactionsRecuesByRib(Long rib) ;
     //public Set<Transaction> retrieveAllTransactionsEmises1ByRib( String rib ); 
-    //public void GetInterestAmount();
 }

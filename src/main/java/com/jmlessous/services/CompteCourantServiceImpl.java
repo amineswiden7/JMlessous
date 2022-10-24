@@ -4,7 +4,10 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import com.jmlessous.entities.Compte;
@@ -26,6 +29,7 @@ public class CompteCourantServiceImpl implements ICompteService{
 		Utilisateur utilisateur = utilisateurRepository.findById(idUser).orElse(null);
 		Float s = utilisateur.getSalaire();
 		String r = GenerateRibC();
+		
 		c.setMontantDecouvert(s);
 		c.setUtilisateurC(utilisateur);
 		c.setRib(r);
@@ -183,6 +187,8 @@ public class CompteCourantServiceImpl implements ICompteService{
 		String IbanC = codePays + RibC;
 		return IbanC;
 	}
+
+
 	
 
 }

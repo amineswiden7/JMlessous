@@ -47,6 +47,14 @@ public class CompteController {
 		return compteService.addAccountC(c,idUser) ;
 	}
 	
+	//http://localhost:8083/JMLessous/AddAccountE
+	@PostMapping("/AddAccountE/{idUser}")
+	@ResponseBody
+	public Compte AddAccountE (@RequestBody CompteEpargne e ,@PathVariable ("idUser")  Long idUser)
+	{
+		return compteEService.addAccountE(e, idUser);
+	}
+	
 	 // http://localhost:8083/JMLessous/modify-Account
 		@PutMapping("/modify-Account")
 		@ResponseBody
@@ -78,13 +86,7 @@ public class CompteController {
 					return list ; 
 				} 
 				
-			//http://localhost:8083/JMLessous/AddAccountE
-			@PostMapping("/AddAccountE/{idUser}")
-			@ResponseBody
-			public Compte AddAccountE (@RequestBody CompteEpargne e ,@PathVariable ("idUser")  Long idUser)
-			{
-				return compteEService.addAccountE(e,idUser) ;
-			}
+		
 			
 			 // http://localhost:8083/JMLessous/modify-AccountE
 				@PutMapping("/modify-AccountE")
@@ -107,8 +109,8 @@ public class CompteController {
 				return compteEService.ArchiveCompteE(ide);
 				}
 				
-				//http://localhost:8083/JMLessous/jereb1/	
-				@GetMapping("/jereb1")
+				//http://localhost:8083/JMLessous/rib
+				@GetMapping("/rib")
 						@ResponseBody
 						public String generateRib ()
 						{
@@ -116,11 +118,22 @@ public class CompteController {
 							return this.RibC ;
 						}
 				
-				//http://localhost:8083/JMLessous/jereb2/	
-				@GetMapping("/jereb2")
+				//http://localhost:8083/JMLessous/iban	
+				@GetMapping("/iban")
 						@ResponseBody
 						public String generateIBan ()
 						{
 							return compteService.GenerateIBanC(this.RibC);
 						}
+				
+				
+				
+				/*
+				
+				//http://localhost:8083/JMLessous/taux	
+				@PostMapping("/taux")
+				@ResponseBody
+				public void taux () {
+					compteEService.GetInterestAmount();
+				}	*/
 }

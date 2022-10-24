@@ -12,4 +12,8 @@ public interface ICompteEService {
 	CompteEpargne retrieveAccount(Long id);
 	void deleteAccount(Long id);
 	CompteEpargne ArchiveCompteE(Long id);
+	//public void GetInterestAmount();
+	public String GenerateRibE() ; 
+	public String GenerateIBanE(String RibE);
+
 }
