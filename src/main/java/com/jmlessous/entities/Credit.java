@@ -25,6 +25,7 @@ public abstract class Credit implements Serializable {
     private Long idCredit ;
     private Float montantCredit;
     private Float montantRestant;
+    private Float duree;
     private Float montantPaye;
     @Temporal (TemporalType.DATE)
     private Date dateDemande;
@@ -32,6 +33,10 @@ public abstract class Credit implements Serializable {
     private Date dateFin;
     private Float mensualite;
     private Status STATUS;
+    private Float risque;
+    private Float taux;
+    private String Motif ;
+    private Boolean FinC;
     @ManyToOne
     private CompteCourant compteCredit;
     /*@ManyToOne
