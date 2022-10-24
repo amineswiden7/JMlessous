@@ -34,8 +34,7 @@ public abstract class Credit implements Serializable {
     private Status STATUS;
     @ManyToOne
     private CompteCourant compteCredit;
-    /*@ManyToOne
-    private PackCredit packCredit;*/
+ 
     @OneToOne(cascade = CascadeType.ALL, mappedBy="credit")
     private Garantie garantie;
 
