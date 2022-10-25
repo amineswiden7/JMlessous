@@ -33,16 +33,40 @@ public class CompteEpargneServiceImpl implements ICompteEService{
 	@Override
 	public Compte addAccountE(CompteEpargne e, Long idUser) {
 		Utilisateur utilisateur = utilisateurRepository.findById(idUser).orElse(null);
+		//Fixée par la banque centrale
+		float TMM = ((float) 7.030);
+		float TRE = (TMM-1)/100;
 		e.setUtilisateurC(utilisateur);
 		String r = GenerateRibE();
-		e.setTauxRemuneration((float) 0);
+		e.setTauxRemuneration(TRE);
 		//e.setIndex_remuneration(0);
 		e.setRib(r);
 		e.setIban(GenerateIBanE(r));
+		//formule d'interet composé
+		//capitalFinal = capitalInitial * (1+TRE) puiss (nbr d'année)
+		float total = (float) (e.getVercement()*(Math.pow((1+TRE),e.getDuree())));
+		//vercement sans interet
+		e.setTotalVercement(e.getTotalVercement()+e.getVercement());
+		//le gain grace aux interets 
+		float totalinteret = total - e.getVercement();
+		e.setInteretAcquis(totalinteret);
+		//solde du compte 
+		e.setSolde(total);
 		compteepargneRepository.save(e);
 		return e;
 	}
-
+	
+	@Override
+	public float GenerateMontant(CompteEpargne e) {
+		//Fixée par la banque centrale
+		float TMM = ((float) 7.030);
+		float TRE = (TMM-1)/100;
+		//formule d'interet composé
+		//capitalFinal = capitalInitial * (1+TRE) puiss (nbr d'année)
+		float total = (float) (e.getVercement()*(Math.pow((1+TRE),e.getDuree())));		
+		return total;
+	}
+	
 	@Override
 	public CompteEpargne updateAccountE(CompteEpargne e) {
 		compteepargneRepository.save(e);
@@ -198,5 +222,7 @@ public class CompteEpargneServiceImpl implements ICompteEService{
 		String IbanE = codePays + RibE;
 		return IbanE;
 	}
+
+
 
 }

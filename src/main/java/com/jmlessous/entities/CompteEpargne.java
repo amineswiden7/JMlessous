@@ -19,12 +19,11 @@ public class CompteEpargne  extends Compte implements Serializable  {
     private Long idEpargne ;*/
 	//private int index_remuneration;
     private float tauxRemuneration;
-    private float vercementInitial ;
-    private float vercementRegulier;
-    @Temporal (TemporalType.DATE)
-    private Date duree;
+    private float vercement ;
+    private float duree;
     private float totalVercement;
     private float interetAcquis;
+    private NatureEpargne natureepargne;
 
 
 }
