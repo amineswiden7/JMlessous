@@ -1,6 +1,7 @@
 package com.jmlessous.services;
 
 
+
 import com.jmlessous.entities.*;
 import com.jmlessous.repositories.CompteCourantRepository;
 import com.jmlessous.repositories.CreditLibreRepository;
@@ -10,12 +11,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+
+import com.jmlessous.entities.CreditLibre;
+import com.jmlessous.entities.Garantie;
+
+
+
 import java.util.List;
 
 @Service
 public class CreditLibreServiceImpl implements ICreditLibreService {
     @Autowired
     CreditLibreRepository creditLibre;
+
     @Autowired
     UtilisateurRepository user;
     @Autowired
@@ -23,12 +31,14 @@ public class CreditLibreServiceImpl implements ICreditLibreService {
     @Autowired
     GarantieRepository garantie;
 
+
     @Override
     public List<CreditLibre> retrieveAllCreditLibre() {
         return (List<CreditLibre>) creditLibre.findAll();
     }
 
     @Override
+
     public CreditLibre addCreditLibre(CreditLibre credit, Long idUser, Long idGarantie) {
         Utilisateur u=user.findById(idUser).orElse(null);
         CompteCourant c=compte.getCompteByUser(idUser);
@@ -127,6 +137,7 @@ public class CreditLibreServiceImpl implements ICreditLibreService {
         }
         return S;
 
+
     }
 
     @Override
@@ -148,6 +159,7 @@ public class CreditLibreServiceImpl implements ICreditLibreService {
         creditLibre.save(creditLibre1);
         return creditLibre1;
     }
+
     //Fonction qui calcule la mensualité
     public float Calcul_mensualite(CreditLibre cr)
     {
@@ -233,4 +245,5 @@ public class CreditLibreServiceImpl implements ICreditLibreService {
         return simulator;
 
     }
+
 }

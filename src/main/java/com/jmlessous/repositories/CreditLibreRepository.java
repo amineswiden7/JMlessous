@@ -1,5 +1,6 @@
 package com.jmlessous.repositories;
 
+
 import com.jmlessous.entities.CreditEtudiant;
 import com.jmlessous.entities.CreditLibre;
 import com.jmlessous.entities.Utilisateur;
@@ -24,5 +25,6 @@ public interface CreditLibreRepository extends CrudRepository<CreditLibre,Long> 
     //selectionner le dernier credit complet pour tester son historique
     @Query(value = "SELECT * FROM CreditLibre c WHERE c.compteCredit.utilisateurC.idUser=:idclient and c.STATUS=true and c.FinC=true ORDER BY dateDemande DESC limit 1" , nativeQuery =true)
     CreditLibre getIDofLatestCompletedCreditsByClient(@Param("idclient") Long idClient);
+
 
 }

@@ -2,13 +2,17 @@ package com.jmlessous.controllers;
 
 import com.jmlessous.entities.CreditLibre;
 import com.jmlessous.entities.Garantie;
+
 import com.jmlessous.entities.NiveauEtude;
 import com.jmlessous.services.Amortissement;
+
 import com.jmlessous.services.ICreditLibreService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+
 import java.util.Hashtable;
+
 import java.util.List;
 
 @RestController
@@ -26,11 +30,13 @@ public class CreditLibreController
     }
 
     //http://localhost:8083/JMLessous/AddCreditLibre
+
     @PostMapping("/AddCreditLibre/{idUser}/{idGarantie}")
     @ResponseBody
     public CreditLibre AddAccount (@RequestBody CreditLibre c ,@PathVariable("idUser") Long idUser,@PathVariable("idGarantie") Long idGarantie)
     {
         return creditLibre.addCreditLibre(c,idUser,idGarantie);
+
     }
 
     // http://localhost:8083/JMLessous/modify-CreditLibre/i
@@ -46,6 +52,7 @@ public class CreditLibreController
     public void deleteCreditLibre (@PathVariable("id") Long id ) {
         creditLibre.deleteCreditLibre(id);
     }
+
 
 
     @GetMapping("/simulateur/{montant}/{duree}/{taux}")
@@ -64,4 +71,5 @@ public class CreditLibreController
         return creditLibre.TabAmortissement(cr);
 
     }
+
 }
