@@ -16,4 +16,5 @@ public interface CompteCourantRepository extends CrudRepository<CompteCourant,Lo
 
     @Query("SELECT c FROM CompteCourant  c WHERE c.utilisateurC.idUser= :id")
     CompteCourant getCompteByUser(@Param("id") Long idUser);
+
 }

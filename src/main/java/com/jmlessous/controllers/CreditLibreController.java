@@ -2,10 +2,13 @@ package com.jmlessous.controllers;
 
 import com.jmlessous.entities.CreditLibre;
 import com.jmlessous.entities.Garantie;
+import com.jmlessous.entities.NiveauEtude;
+import com.jmlessous.services.Amortissement;
 import com.jmlessous.services.ICreditLibreService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Hashtable;
 import java.util.List;
 
 @RestController
@@ -23,11 +26,11 @@ public class CreditLibreController
     }
 
     //http://localhost:8083/JMLessous/AddCreditLibre
-    @PostMapping("/AddCreditLibre")
+    @PostMapping("/AddCreditLibre/{idUser}/{idGarantie}")
     @ResponseBody
-    public CreditLibre AddAccount (@RequestBody CreditLibre c )
+    public CreditLibre AddAccount (@RequestBody CreditLibre c ,@PathVariable("idUser") Long idUser,@PathVariable("idGarantie") Long idGarantie)
     {
-        return creditLibre.addCreditLibre(c);
+        return creditLibre.addCreditLibre(c,idUser,idGarantie);
     }
 
     // http://localhost:8083/JMLessous/modify-CreditLibre/i
@@ -45,4 +48,20 @@ public class CreditLibreController
     }
 
 
+    @GetMapping("/simulateur/{montant}/{duree}/{taux}")
+    public Amortissement Simulation(@PathVariable("montant") float montant, @PathVariable("duree") float duree, @PathVariable("taux") float taux ){
+       CreditLibre cr=new CreditLibre();
+       cr.setTauxInteret(taux);
+       cr.setMontantCredit(montant);
+       cr.setDuree(duree);
+        return creditLibre.Simulateur(cr);
+    }
+
+    @PostMapping("/tabAmortissement")
+    @ResponseBody
+    public Amortissement[] Simulation(@RequestBody CreditLibre cr)
+    {
+        return creditLibre.TabAmortissement(cr);
+
+    }
 }
