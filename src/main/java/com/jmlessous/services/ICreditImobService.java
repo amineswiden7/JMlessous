@@ -15,7 +15,11 @@ public interface ICreditImobService {
 
     Credit Archive(Long Id_credit);
     Credit retrieveActiveCredit(Long id_User);
-    float Calcul_mensualite(Credit cr);
+    float Calcul_mensualite(CreditImmobilier cr);
+
+    CreditImmobilier addCreditt (CreditImmobilier a , Long id_User);
+
+    float calculTaux(CreditImmobilier a );
 
 
 

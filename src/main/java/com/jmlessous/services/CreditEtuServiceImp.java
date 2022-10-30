@@ -106,6 +106,8 @@ public class CreditEtuServiceImp implements ICreditEtu {
         CreditEtudiant cr = etu.findById(a).orElse(null);
         if (cr.getSTATUS() == Status.ENCOURSDETRAITEMENT) {
             cr.setSTATUS(Status.ACCEPTE);
+            float b =cr.getCompteCredit().getSolde();
+            cr.getCompteCredit().setSolde(b+cr.getMontantCredit());
             etu.save(cr);
 
 
