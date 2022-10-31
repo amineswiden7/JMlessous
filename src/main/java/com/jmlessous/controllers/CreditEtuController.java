@@ -23,7 +23,7 @@ public class CreditEtuController {
     @Autowired
     IUtilisateurService utilisateurService;
 
-    @GetMapping("/retrieve-all-credit")
+    @GetMapping("/retrieve-all-creditImob")
     @ResponseBody
     public List<CreditEtudiant> getCredit() {
         List<CreditEtudiant> listcre = creditEtu.retrieveAllCredit();
