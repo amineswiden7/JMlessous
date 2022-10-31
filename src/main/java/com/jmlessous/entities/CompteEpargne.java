@@ -20,6 +20,7 @@ public class CompteEpargne  extends Compte implements Serializable  {
 	//private int index_remuneration;
     private float tauxRemuneration;
     private float vercement ;
+   // private float vercementReg;
     private float duree;
     private float totalVercement;
     private float interetAcquis;

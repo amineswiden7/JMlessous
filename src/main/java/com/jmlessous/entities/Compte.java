@@ -26,7 +26,7 @@ public  class Compte  {
     @Id
     @Column(name ="numCompte")
     @GeneratedValue(strategy = GenerationType.TABLE)
-    private Long numCompte;
+    private String numCompte;
     private Float solde;
     private String rib;
     private String iban;
@@ -40,9 +40,10 @@ public  class Compte  {
     @OneToMany(cascade = CascadeType.ALL, mappedBy="compteCredit")
     private Set<Credit> credits;
     @JsonIgnore
-    @ManyToMany(mappedBy="comptesTransaction", cascade = CascadeType.ALL)
-    private Set<Transaction> transactions;
+   // @ManyToMany(mappedBy="comptesTransaction", cascade = CascadeType.ALL)
+   // private Set<Transaction> transactions;
 
-    
+    @OneToMany(mappedBy = "comptesTransaction")
+ 	private Set<Transaction> Transactions ; 
 
 }

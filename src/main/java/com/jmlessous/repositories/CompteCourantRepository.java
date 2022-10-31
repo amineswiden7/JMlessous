@@ -14,4 +14,5 @@ import com.jmlessous.entities.Utilisateur;
 public interface CompteCourantRepository extends CrudRepository<CompteCourant,Long>{
 
 
+
 }

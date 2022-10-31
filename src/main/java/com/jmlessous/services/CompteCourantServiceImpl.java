@@ -29,7 +29,7 @@ public class CompteCourantServiceImpl implements ICompteService{
 		Utilisateur utilisateur = utilisateurRepository.findById(idUser).orElse(null);
 		Float s = utilisateur.getSalaire();
 		String r = GenerateRibC();
-		
+		//convention => Montant découvert d'un compte = 1 salaire 
 		c.setMontantDecouvert(s);
 		c.setUtilisateurC(utilisateur);
 		c.setRib(r);

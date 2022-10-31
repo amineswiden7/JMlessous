@@ -63,9 +63,15 @@ public class CompteEpargneServiceImpl implements ICompteEService{
 		float TRE = (TMM-1)/100;
 		//formule d'interet composé
 		//capitalFinal = capitalInitial * (1+TRE) puiss (nbr d'année)
-		float total = (float) (e.getVercement()*(Math.pow((1+TRE),e.getDuree())));		
-		return total;
-	}
+		float total1 = (float) (e.getVercement()*(Math.pow((1+TRE),e.getDuree())));	
+		//float n = e.getDuree()*12;
+		//for (int i=1; i<n ;i++) {
+		//float total2 = (float) (e.getVercementReg()*(Math.pow((1+TRE),e.getDuree()-(n/12))));
+		//float t = total1 + total2;
+		//System.out.println("total :" + total);
+		//}
+		return total1;
+	}	
 	
 	@Override
 	public CompteEpargne updateAccountE(CompteEpargne e) {
