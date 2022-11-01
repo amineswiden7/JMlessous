@@ -176,10 +176,10 @@ public class CreditLibreServiceImpl implements ICreditLibreService {
 
 
         double interet=cr.getTauxInteret()/12;
-        System.out.println("intereeeeeeeeeeeettt");
+        System.out.println("interet");
         System.out.println(cr.getTauxInteret());
         int leng=(int) (cr.getDuree()*12);
-        System.out.println("perioddeeeeeeee");
+        System.out.println("periode");
         System.out.println(cr.getDuree()*12);
         System.out.println(leng);
 
@@ -237,10 +237,6 @@ public class CreditLibreServiceImpl implements ICreditLibreService {
         simulator.setAmortissement(credit.getMontantCredit()+s1);
         //mnt credit
         simulator.setMontantR(credit.getMontantCredit());
-
-
-
-
 
         return simulator;
 
