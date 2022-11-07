@@ -28,7 +28,7 @@ public  abstract class Compte  {
     @GeneratedValue(strategy = GenerationType.TABLE)
     private Long numCompte;
     private Float solde;
-    private Long rib;
+    private String rib;
     private String iban;
     @Temporal (TemporalType.DATE)
     private Date dateOuverture;
@@ -38,9 +38,10 @@ public  abstract class Compte  {
     private Utilisateur utilisateurC;
 
     @JsonIgnore
-    @ManyToMany(mappedBy="comptesTransaction", cascade = CascadeType.ALL)
-    private Set<Transaction> transactions;
+   // @ManyToMany(mappedBy="comptesTransaction", cascade = CascadeType.ALL)
+   // private Set<Transaction> transactions;
 
-    
+    @OneToMany(mappedBy = "comptesTransaction")
+ 	private Set<Transaction> Transactions ; 
 
 }
