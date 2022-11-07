@@ -71,8 +71,7 @@ public class CompteEpargneServiceImpl implements ICompteEService{
 		//System.out.println("total :" + total);
 		//}
 		return total1;
-	}	
-	
+	}
 	@Override
 	public CompteEpargne updateAccountE(CompteEpargne e) {
 		compteepargneRepository.save(e);
@@ -228,7 +227,163 @@ public class CompteEpargneServiceImpl implements ICompteEService{
 		String IbanE = codePays + RibE;
 		return IbanE;
 	}
+	/*
+	//Fonction qui calcule le tabamortissement
+		public CompteEpargne[] TabAmortissement(CompteEpargne ce)
+		{   
+			
+				 
+			double interest=ce.getTauxRemuneration()/12;
+	        System.out.println("intereeeeeeeeeeeettt");
+			System.out.println(ce.getTauxRemuneration());
+	        int leng=(int) (ce.getDuree()*12);
+	        System.out.println("perioddeeeeeeee");
+	        System.out.println(ce.getDuree()*12);
+	        System.out.println(leng);
+	        
+	        CompteEpargne[] ListEpargne =new CompteEpargne[leng];
+			
+	        CompteEpargne cmptepa=new CompteEpargne(null, null, null, null, null, false, null, null, null, leng, leng, leng) ;
+			//System.out.println(cr.getAmount());
+			
+			
+	        cmptepa.setVercement(ce.getVercement());
+	        cmptepa.setVercementReg(ce.getVercementReg());
+	        cmptepa.setInteretAcquis((float) (cmptepa.getVercement()*interest));
+	        cmptepa.setVercement(cmptepa.getVercement()-cmptepa.getInteretAcquis());
+	        ListEpargne[0]=cmptepa;
+			
+			//System.out.println(ListAmortissement[0]);
+			for (int i=1;i<ce.getDuree()*12;i++) {
+				CompteEpargne EpargnePrecedant=ListEpargne[i-1];
+				CompteEpargne EpargneNEW=new CompteEpargne(null, null, null, null, null, false, null, null, null, i, i, i) ;
+				EpargneNEW.setVercement(EpargnePrecedant.getVercement()-EpargnePrecedant.getVercement());
+				EpargneNEW.setInteretAcquis((float) (EpargneNEW.getVercement()*interest));
+				EpargneNEW.setVercementReg(ce.getVercementReg());
+				EpargneNEW.setVercement(EpargneNEW.getVercementReg()-EpargneNEW.getInteretAcquis());
+				ListEpargne[i]=EpargneNEW;
+				
+			}
+			
+			
+			
+			return ListEpargne;
+		}
+	
+	@Override
+	public CompteEpargne Simulateur(CompteEpargne ce) {
+		System.out.println(ce.getVercement());
+		CompteEpargne simulator =new CompteEpargne(null, null, null, null, null, false, null, null, null, 0, 0, 0);
+		//mnt total
+		simulator.setTotalVercement(0);
+		//mnt interet
+		simulator.setInteretAcquis(0);
+		//mnt monthly
+		simulator.setVercementReg(ce.getVercementReg());		
+		CompteEpargne[] Epargnetab = TabAmortissement(ce);
+		float s=0;
+		float s1=0;
+		for (int i=0; i < Epargnetab.length; i++) {
+		s1=(float) (s1+Epargnetab[i].getInteretAcquis());
+		}
+		//mnt interet
+		simulator.setInteretAcquis(s1);
+		 //mnt total
+		simulator.setTotalVercement(ce.getVercement()+s1);
+		//mnt credit
+		simulator.setVercement(ce.getVercement());
+		return simulator;
+	}
 
+*/
+	//Fonction qui calcule le taux de remuniration  
+	public float GenerateTauxRémuniration (CompteEpargne e) {
+		float TMM = ((float) 7.030);
+		float TRE = (TMM-1)/100;
+		return TRE;	
+	}
+	//Fonction qui calcul le montant de gain mensuelle 
+	public float GenerateMontantMensuelle(CompteEpargne e) {
+		//Fixée par la banque centrale
+		float TMM = ((float) 7.030);
+		float TRE = (TMM-1)/100;
+		//formule d'interet composé
+		//capitalFinal = capitalInitial * (1+TRE) puiss (nbr d'année)
+		float totalM = (float) (e.getVercementReg()*(Math.pow((1+TRE),e.getDuree())));	
+		return totalM;
+	}
+	//Fonction qui calcule le tableau de Rendement de l'epargne
+	
+	public Epargne[] TabRendement(Epargne ce) {   		 
+		float interest= (float) ((7.030-1)/100); //taux de remuniration mentuel
+	    System.out.println("taux de remuniration");
+	    System.out.println(ce.getTauxRemuneration());
+	    int leng=(int) (ce.getAnnee()*12); //Duree en mois 
+	    System.out.println("periode");
+	    System.out.println(ce.getAnnee()*12);
+	    System.out.println(leng);
+	        
+	    Epargne[] ListEpargne =new Epargne[leng];
+		Epargne epar=new Epargne() ;
+		/*
+		epar.setAnnee(1);
+		epar.setTauxRemuneration(interest);
+		epar.setVercementReg(ce.getVercementReg());
+		epar.setVercementInitial(ce.getVercementInitial());
+	    epar.setTotalVercement(ce.getVercementInitial()+((ce.getVercementReg())));
+	    //System.out.println(ce.getVercement()+((ce.getVercementReg())*(ce.getDuree()*12)));
+	    //System.out.println(ce.getVercementReg());
+	    epar.setInteretAcquis((float) (epar.getTotalVercement()*interest));
+	    //System.out.println((epar.getTotalVercement()*interest));
+	    epar.setGain(epar.getTotalVercement()+epar.getInteretAcquis());
+	    //System.out.println(epar.getTotalVercement()+epar.getInteretAcquis());
+	    */
+	    ListEpargne[1]=epar;
+		for (int i=0;i< ce.getAnnee()*12;i++) {
+				Epargne eparNEW=new Epargne() ;
+				eparNEW.setAnnee(i);
+				eparNEW.setTauxRemuneration((float) ((7.030-1)/100));
+				//System.out.println(eparNEW.getTauxRemuneration());
+				eparNEW.setVercementReg(ce.getVercementReg());
+				eparNEW.setTotalVercement(ce.getVercementInitial()+ce.getVercementReg()*i);
+				eparNEW.setVercementInitial(ce.getVercementInitial());
+			//	float total = (float) (e.getVercement()*(Math.pow((1+TRE),e.getDuree())));
+				float total = (float) ((eparNEW.getTotalVercement())*(Math.pow((1+interest),i)));
+				eparNEW.setGain(total);
+				eparNEW.setInteretAcquis((float) (eparNEW.getTotalVercement()*interest));
+				//eparNEW.setGain(eparNEW.getTotalVercement()+eparNEW.getInteretAcquis());
+				ListEpargne[i]=eparNEW;				
+			}	
+			return ListEpargne;
+		}
+		
+	@Override
+	public Epargne Simulateur(Epargne ce) {
+		System.out.println(ce.getVercementInitial());
+		Epargne simulator =new Epargne();
+		//mnt total
+		simulator.setTotalVercement(0);
+		//mnt interet acquis 
+		simulator.setInteretAcquis(0);
+		//mnt monthly
+		simulator.setVercementReg(ce.getVercementReg());
+		simulator.setAnnee(ce.getAnnee());
+		simulator.setTauxRemuneration((float) ((7.030-1)/100));
+		simulator.setVercementInitial(ce.getVercementInitial());
+		Epargne[] Epargnetab = TabRendement(ce);
+		float s=0;
+		float s1=0;
+		for (int i=0; i < Epargnetab.length; i++) {
+		    s1=(float) (s1*Epargnetab[i].getInteretAcquis());
+		}
+		//mnt interet
+		simulator.setInteretAcquis(s1);
+		 //mnt total
+		simulator.setTotalVercement(ce.getTotalVercement()+s1);
+		//mnt epargne
+		//simulator.setVercement(ce.getVercement());
+		return simulator;
+	}
 
 
 }

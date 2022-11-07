@@ -21,5 +21,4 @@ public interface ITransactionService {
 	void SuppTransaction(Long id);
 	void SuppAllTransaction();
 	List<Transaction> TransactionParType (TypeTransaction typeTransaction);
-	
 }

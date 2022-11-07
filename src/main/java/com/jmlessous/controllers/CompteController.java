@@ -17,11 +17,11 @@ import com.jmlessous.entities.Compte;
 import com.jmlessous.entities.CompteCourant;
 import com.jmlessous.entities.CompteEpargne;
 import com.jmlessous.entities.Utilisateur;
+import com.jmlessous.services.CompteEpargneServiceImpl;
+import com.jmlessous.services.Epargne;
 import com.jmlessous.services.ICompteEService;
 import com.jmlessous.services.ICompteService;
 import com.jmlessous.services.IUtilisateurService;
-
-
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/Compte")
@@ -33,6 +33,8 @@ public class CompteController {
     ICompteService compteService;
 	@Autowired
     ICompteEService compteEService;
+	@Autowired
+	CompteEpargneServiceImpl cmpser;
 	
 	public String RibC = ""; 
 
@@ -140,7 +142,32 @@ public class CompteController {
 							return compteEService.GenerateMontant(e);
 						}
 				
+
+				//http://localhost:8083/JMLessous/simulate/0.06/1000/100/5
+				@GetMapping("/simulate/{vercementInitial}/{vercementReg}/{annee}")
+				@ResponseBody
+				public Epargne simulate(
 				
+				@PathVariable("vercementInitial") float vercementInitial,
+				@PathVariable("vercementReg") float vercementReg,
+				@PathVariable("annee") float annee) 
+				{   Epargne ce= new Epargne(vercementInitial,vercementReg,annee);					
+					return compteEService.Simulateur(ce);				
+				}
+				
+				//http://localhost:8083/JMLessous/tab/0.06/1000/100/5
+				@GetMapping("/tab/{vercementInitial}/{vercementReg}/{annee}")
+				@ResponseBody
+				public Epargne[]  tab(
+				
+				@PathVariable("vercementInitial") float vercementInitial,
+				@PathVariable("vercementReg") float vercementReg,
+				@PathVariable("annee") float annee) {
+				
+					Epargne ce=new Epargne(vercementInitial,vercementReg,annee);
+				return cmpser.TabRendement(ce);
+				
+				}
 				/*
 				
 				//http://localhost:8083/JMLessous/taux	

@@ -16,5 +16,5 @@ public interface ICompteEService {
 	//public void GetInterestAmount();
 	public String GenerateRibE() ; 
 	public String GenerateIBanE(String RibE);
-
+	Epargne Simulateur(Epargne ce);
 }

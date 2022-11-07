@@ -26,7 +26,7 @@ public  class Compte  {
     @Id
     @Column(name ="numCompte")
     @GeneratedValue(strategy = GenerationType.TABLE)
-    private String numCompte;
+    private Long numCompte;
     private Float solde;
     private String rib;
     private String iban;
