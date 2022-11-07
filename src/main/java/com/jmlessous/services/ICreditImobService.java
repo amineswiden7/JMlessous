@@ -25,6 +25,8 @@ public interface ICreditImobService {
     float calculTauxSim(CreditImmobilier a);
     Amortissement[] TabAmortissementt(CreditImmobilier cr);
      Amortissement Simulateurr(CreditImmobilier cr);
+     void TraitementCredit();
+
 
 
 

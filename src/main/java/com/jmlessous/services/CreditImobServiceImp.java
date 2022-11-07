@@ -286,12 +286,11 @@ public class CreditImobServiceImp implements ICreditImobService {
         return a;
     }
 
-
-
     @Override
     public List<Credit> retrieveCreditByUser(Long id_user) {
-        return cr.getCreditByUser(id_user);
+        return null;
     }
+
 
     @Override
     public Credit Archive(Long Id_credit) {
@@ -300,7 +299,9 @@ public class CreditImobServiceImp implements ICreditImobService {
 
     @Override
     public Credit retrieveActiveCredit(Long id_User) {
-        return null;
+
+
+        return cr.getActiveCreditImobByUser(id_User) ;
     }
 
     @Override
@@ -320,7 +321,7 @@ public class CreditImobServiceImp implements ICreditImobService {
 
     @Override
     public CreditImmobilier addCreditt(CreditImmobilier a, Long id_User) {
-        CreditImmobilier ce = cr.getActiveCreditImobByUser(id_User);
+        CreditImmobilier ce = cr.getActiveCreditImobByUser(id_User);//
         if(ce!=null) {
             a.setMotif("vous ne pouvez pas demander un credit ");
             a.setSTATUS(Status.REFUS);
@@ -332,7 +333,7 @@ public class CreditImobServiceImp implements ICreditImobService {
             Utilisateur uu = u.findById(id_User).orElse(null);
             CompteCourant c = cp.getCompteByUser(id_User);
             a.setCompteCredit(c);
-            if (RatioAp < 0.2) {
+            if (RatioAp < 0.2) {// loi de finance
                 a.setSTATUS(Status.REFUS);
                 a.setFinC(Boolean.TRUE);
                 return a;
@@ -604,7 +605,7 @@ public class CreditImobServiceImp implements ICreditImobService {
 
     @Override
     public float calculTaux(CreditImmobilier a) {
-        float Ratio = a.getMensualite() / (a.getCompteCredit().getUtilisateurC().getSalaire() - a.getChargeMensuel());
+        float Ratio = a.getMensualite() / (a.getCompteCredit().getUtilisateurC().getSalaire() - a.getChargeMensuel());//reglementation
         float aa=0;
         if (Ratio <= 0.5) {
             switch (a.getLocalisation()) {
@@ -716,12 +717,21 @@ public class CreditImobServiceImp implements ICreditImobService {
         simulator.setAmortissement(credit.getMontantCredit()+s1);
         //mnt credit
         simulator.setMontantR(credit.getMontantCredit());
-
-
-
-
-
         return simulator;
+
+    }
+
+    @Override
+    public void TraitementCredit() {
+        List<CreditImmobilier> Credittab = cr.getCredit();
+        for (int i=0; i < Credittab.size(); i++) {
+            if(Credittab.get(i).getCompteCredit().getUtilisateurC().getCreditAuthorization() == true){
+                Credittab.get(i).setSTATUS(Status.ACCEPTE);
+                //Credittab.get(i).s();
+            }
+            else  Credittab.get(i).setSTATUS(Status.REFUS);
+
+        }
 
     }
 
