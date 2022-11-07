@@ -5,4 +5,6 @@ import com.jmlessous.entities.Utilisateur;
 public interface IUtilisateurService {
     Utilisateur loadUser(String username);
     Utilisateur addUser(Utilisateur u);
+    Utilisateur loadUser(Long id_user);
+
 }

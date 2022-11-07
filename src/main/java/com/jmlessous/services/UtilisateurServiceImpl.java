@@ -26,4 +26,10 @@ public class UtilisateurServiceImpl implements IUtilisateurService {
        userRep.save(u);
         return u;
     }
+
+    @Override
+    public Utilisateur loadUser(Long id_user) {
+        Utilisateur user = userRep.findById(id_user).orElse(null);
+        return user;
+    }
 }

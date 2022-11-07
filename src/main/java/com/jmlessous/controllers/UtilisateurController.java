@@ -3,12 +3,10 @@ package com.jmlessous.controllers;
 import com.jmlessous.entities.Utilisateur;
 import com.jmlessous.services.IUtilisateurService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
+@CrossOrigin
 public class UtilisateurController {
 
     @Autowired
@@ -19,5 +17,11 @@ public class UtilisateurController {
     public Utilisateur AjoutUser (@RequestBody Utilisateur c)
     {
         return utilisateurService.addUser(c);
+    }
+    @GetMapping("/ListUser/{id}")
+    @ResponseBody
+    public Utilisateur affichUser (@PathVariable("id") Long id )
+    {
+        return utilisateurService.loadUser(id);
     }
 }

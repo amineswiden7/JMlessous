@@ -1,5 +1,6 @@
 package com.jmlessous.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -18,6 +19,9 @@ public class CompteCourant  extends Compte implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idCourant  ;*/
     private Float montantDecouvert;
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL, mappedBy="compteCredit")
+    private Set<Credit> credits;
 
 
 }

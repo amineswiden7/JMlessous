@@ -22,7 +22,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 
-public  class Compte  {
+public  abstract class Compte  {
     @Id
     @Column(name ="numCompte")
     @GeneratedValue(strategy = GenerationType.TABLE)
@@ -36,9 +36,7 @@ public  class Compte  {
     @JsonIgnore
     @ManyToOne
     private Utilisateur utilisateurC;
-    @JsonIgnore
-    @OneToMany(cascade = CascadeType.ALL, mappedBy="compteCredit")
-    private Set<Credit> credits;
+
     @JsonIgnore
    // @ManyToMany(mappedBy="comptesTransaction", cascade = CascadeType.ALL)
    // private Set<Transaction> transactions;
