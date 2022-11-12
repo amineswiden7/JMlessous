@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UtilisateurServiceImpl implements IUtilisateurService {
     @Autowired
@@ -32,4 +34,10 @@ public class UtilisateurServiceImpl implements IUtilisateurService {
         Utilisateur user = userRep.findById(id_user).orElse(null);
         return user;
     }
+
+    @Override
+    public List<Utilisateur> retrieveAllUtilisateur() {
+        return (List<Utilisateur>) userRep.findAll();
+    }
+
 }

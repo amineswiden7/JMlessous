@@ -5,6 +5,8 @@ import com.jmlessous.services.IUtilisateurService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @CrossOrigin
 public class UtilisateurController {
@@ -17,6 +19,12 @@ public class UtilisateurController {
     public Utilisateur AjoutUser (@RequestBody Utilisateur c)
     {
         return utilisateurService.addUser(c);
+    }
+    @GetMapping("/ListUser")
+    @ResponseBody
+    public List<Utilisateur> affichUser ( )
+    {
+        return utilisateurService.retrieveAllUtilisateur();
     }
     @GetMapping("/ListUser/{id}")
     @ResponseBody
