@@ -38,6 +38,7 @@ public class Utilisateur implements Serializable, UserDetails {
     private String login;
     private String motDePasse;
     private String adresse;
+    @Enumerated(EnumType.STRING)
     private Role role;
     private Float rib ;
     private Boolean creditAuthorization;

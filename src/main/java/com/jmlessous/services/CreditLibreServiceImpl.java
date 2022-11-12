@@ -47,26 +47,38 @@ public class CreditLibreServiceImpl implements ICreditLibreService {
         credit.setDateDemande(new Date());
         float montant=credit.getMontantCredit();
 
- // a.setMensualite(100F);
+        // a.setMensualite(100F);
+       // credit.setMensualite(20000.0F);
 
-        float ratio = credit.getMensualite()/u.getSalaire();
+        float ratio = montant/(u.getSalaire()*12+g.getValeur());
+        System.out.println(ratio);
+
         credit.setTauxInteret((float) (0.05+(ratio/20)));
-        float tauxmensuel=credit.getTauxInteret()/12;
         float period= credit.getDuree()*12;
+        float tauxmensuel=credit.getTauxInteret()/12;
         float mensualite=(float) ((montant*tauxmensuel)/(1-(Math.pow((1+tauxmensuel),-period ))));
-       if(u.getCreditAuthorization()==null)
+
+
+
+
+
+        if(u.getCreditAuthorization()==null)
        {
            //tester sur le risk(client nouveau)
            //NB LE TAUX DE RISQUE 1%<R<2.5%
-           if(1.5*credit.getGarantie().getValeur()>=credit.getMontantCredit())
+           System.out.println(g.getValeur());
+           System.out.println(credit.getMontantCredit());
+           if(1.5*g.getValeur()>=credit.getMontantCredit())
            {
 
-               credit.setRisque((float) (0.01+credit.getMontantCredit()/(credit.getGarantie().getValeur()*100)));
-
+               credit.setRisque((float) (0.01+credit.getMontantCredit()/(g.getValeur()*100)));
+               credit.setGarantie(g);
                credit.setMensualite(mensualite);
                credit.getCompteCredit().getUtilisateurC().setCreditAuthorization(false);
                credit.setMotif("nouvel client avec garantie certifié");
                credit.setSTATUS(Status.ENCOURSDETRAITEMENT);
+               u.setCreditAuthorization(true);
+               user.save(u);
 
            }
            else
@@ -87,6 +99,8 @@ public class CreditLibreServiceImpl implements ICreditLibreService {
                 credit.getCompteCredit().getUtilisateurC().setCreditAuthorization(false);
                 credit.setMotif("Ancien client avec un BON risque");
                 credit.setSTATUS(Status.ENCOURSDETRAITEMENT);
+                u.setCreditAuthorization(true);
+                user.save(u);
                // Acceptation(credit,fund,"Ancien client avec un BON risque ");
             }
             else if (Ratio_retard>=0.1 && Ratio_retard<=0.25)
@@ -97,6 +111,8 @@ public class CreditLibreServiceImpl implements ICreditLibreService {
                 credit.setMotif("Ancien client avec un risque modérable ");
                 credit.setSTATUS(Status.ENCOURSDETRAITEMENT);
                 //Acceptation(credit,fund,"Ancien client avec un risque modérable ");
+                u.setCreditAuthorization(true);
+                user.save(u);
             }
             else
             {   credit.setSTATUS(Status.REFUS);
@@ -111,6 +127,8 @@ public class CreditLibreServiceImpl implements ICreditLibreService {
        {
            credit.setSTATUS(Status.REFUS);
            credit.setMotif("Interdiction de Crédit");
+           u.setCreditAuthorization(false);
+           user.save(u);
        }
 
 
