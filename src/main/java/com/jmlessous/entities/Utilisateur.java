@@ -39,7 +39,8 @@ public class Utilisateur implements Serializable, UserDetails {
     private String motDePasse;
     private String adresse;
     private Role role;
-    private Float rib ;
+    private String rib ;
+    private String iban; 
     private Boolean creditAuthorization;
     @ManyToMany()
     private Set<Message> messages;

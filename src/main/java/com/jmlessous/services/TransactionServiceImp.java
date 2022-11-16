@@ -95,8 +95,8 @@ public class TransactionServiceImp implements ITransactionService{
 		}
 		else
 		{
-			code_tr=0;
-		}
+		code_tr=0;
+	}
 		
 		return code_tr ;  
 	}
@@ -115,6 +115,20 @@ public class TransactionServiceImp implements ITransactionService{
 		return "Transaction non approuvée" ; 		 
 	    }
 	}
+	
+	@Override
+	public String approveTransactionAng(Transaction s, Long code) throws MessagingException, javax.mail.MessagingException {
+		if(addTransaction(s)==code) 
+		{
+		transrepo.save(s);
+		return "transaction approuveé" ; 
+		}
+		else 
+		{
+		return "Transaction non approuvée" ; 		 
+	    }
+	}
+	
 
 	@Override
 	public Transaction AnnulerTransaction(Transaction t) {
@@ -157,5 +171,9 @@ public class TransactionServiceImp implements ITransactionService{
 	public List<Transaction> TransactionParType (TypeTransaction typeTransaction) {
 		  return transrepo.findTransactionByTransactionType(typeTransaction);
 	}
+
+	
+
+	
 	
 }
