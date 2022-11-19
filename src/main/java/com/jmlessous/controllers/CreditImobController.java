@@ -10,6 +10,12 @@ import com.jmlessous.services.IUtilisateurService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -57,7 +63,17 @@ public class CreditImobController {
 
     @PostMapping("/tabAmor")
     @ResponseBody
-    public Amortissement[] Sim(@RequestBody CreditImmobilier cr) {
+    public Amortissement[] Sim(HttpServletResponse response,@RequestBody CreditImmobilier cr) throws IOException {
+
+        response.setContentType("application/pdf");
+       DateFormat dateFormater = new SimpleDateFormat("yyyy-MM-dd_HH:mm");
+        String currentDateTime = dateFormater.format(new Date());
+        String headerKey = "Content-Disposition";
+       String headerValue = "Attachement;filename=inves_"+ currentDateTime + ".pdf";
+        response.setHeader(headerKey, headerValue);
+        Amortissement[] listInvestesment = creditImobService.TabAmortissementt(cr);;
+        TabAmortPDFExporter exporter = new TabAmortPDFExporter(Arrays.asList(listInvestesment));
+        exporter.export(response);
         return creditImobService.TabAmortissementt(cr);
 
     }
