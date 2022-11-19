@@ -82,6 +82,108 @@ public class CreditEtuServiceImp implements ICreditEtu {
     }
 
     @Override
+    public CreditEtudiant addCreditSim(CreditEtudiant a) {
+        if (a.getNiveauEtude() == NiveauEtude.INGENIERIE) {
+            a.setTauxInteret((float) 0.03);
+
+
+        } else if (a.getNiveauEtude() == NiveauEtude.MASTER) {
+            a.setTauxInteret((float) 0.025);
+
+        } else
+            a.setTauxInteret((float) 0.02);
+        float montant = a.getMontantCredit();
+        float tauxmensuel = a.getTauxInteret() / 12;
+        float period = a.getDuree() * 12;
+        float mensualite = (float) ((montant * tauxmensuel) / (1 - (Math.pow((1 + tauxmensuel), -period))));
+        double sc = Scoring(montant, period, a.getNiveauEtude());
+        a.setScore(sc);
+        a.setMensualite(mensualite);
+        a.setSTATUS(Status.ENCOURSDETRAITEMENT);
+        a.setFinC(false);
+
+        a.setDateDemande(new Date());
+       // a.setCompteCredit(cc.getCompteByUser(idUser));
+        //etu.save(a);
+        if(a.getScore()<30){
+            a.setSTATUS(Status.REFUS);
+            a.setMotif("Risque trés éleve ");
+
+        }
+        return a;
+
+    }
+
+    @Override
+    public Amortissement Simulateurr(CreditEtudiant cr) {
+        CreditEtudiant credit=addCreditSim(cr);
+        System.out.println(credit.getMontantCredit());
+        Amortissement simulator =new Amortissement();
+        //mnt total
+        simulator.setMontantR(0);
+
+        //mnt interet
+        simulator.setInterest(0);
+        //mnt monthly
+        simulator.setMensualite(Calcul_mensualite(credit));
+
+        Amortissement[] Credittab = TabAmortissementt(credit);
+        float s=0;
+        float s1=0;
+        for (int i=0; i < Credittab.length; i++) {
+            s1=(float) (s1+Credittab[i].getInterest());
+        }
+        //mnt interet
+        simulator.setInterest(s1);
+        //mnt total
+        simulator.setAmortissement(credit.getMontantCredit()+s1);
+        //mnt credit
+        simulator.setMontantR(credit.getMontantCredit());
+        return simulator;
+    }
+
+    @Override
+    public Amortissement[] TabAmortissementt(CreditEtudiant cr) {
+        CreditEtudiant c=addCreditSim(cr);
+        double interest=c.getTauxInteret()/12;
+        System.out.println("intereettt");
+        System.out.println(c.getTauxInteret());
+        int leng=(int) (c.getDuree()*12);
+        System.out.println("periode");
+        System.out.println(c.getDuree()*12);
+        System.out.println(leng);
+
+        Amortissement[] ListAmortissement =new Amortissement[leng];
+
+        Amortissement amort=new Amortissement() ;
+        //System.out.println(cr.getAmount());
+
+
+        amort.setMontantR(c.getMontantCredit());
+        amort.setMensualite(Calcul_mensualite(c));
+        amort.setInterest(amort.getMontantR()*interest);
+        amort.setAmortissement(amort.getMensualite()-amort.getInterest());
+        ListAmortissement[0]=amort;
+
+        //System.out.println(ListAmortissement[0]);
+        for (int i=1;i< c.getDuree()*12;i++) {
+            Amortissement amortPrecedant=ListAmortissement[i-1];
+            Amortissement amortNEW=new Amortissement() ;
+            amortNEW.setMontantR(amortPrecedant.getMontantR()-amortPrecedant.getAmortissement());
+            amortNEW.setInterest(amortNEW.getMontantR()*interest);
+            amortNEW.setMensualite(Calcul_mensualite(cr));
+            amortNEW.setAmortissement(amortNEW.getMensualite()-amortNEW.getInterest());
+            ListAmortissement[i]=amortNEW;
+
+        }
+
+
+
+        return ListAmortissement;
+    }
+
+
+    @Override
     public List<CreditEtudiant> retrieveCreditByUser(Long id_user) {
         return etu.getCreditByUser(id_user);
     }

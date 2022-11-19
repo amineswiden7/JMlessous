@@ -32,6 +32,7 @@ public abstract class Credit implements Serializable {
     @Temporal (TemporalType.DATE)
     private Date dateFin;
     private Float mensualite;
+    @Enumerated(EnumType.STRING)
     private Status STATUS;
     private Float risque;
     private Float taux;

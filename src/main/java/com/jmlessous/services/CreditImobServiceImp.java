@@ -4,7 +4,6 @@ import com.jmlessous.entities.*;
 import com.jmlessous.repositories.CompteCourantRepository;
 import com.jmlessous.repositories.CreditImobRepository;
 import com.jmlessous.repositories.UtilisateurRepository;
-import com.sun.org.apache.xpath.internal.operations.And;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -60,7 +59,7 @@ public class CreditImobServiceImp implements ICreditImobService {
 
                     }
 
-                        if (a.getMontantMensuelPretPayer() - Calcul_mensualite(a) >= 0) {
+                        if (a.getMontantmensuelpretpayer() - Calcul_mensualite(a) >= 0) {
                             a.setMensualite(Calcul_mensualite(a));
                             a.setSTATUS(Status.ACCEPTE);
                         } else
@@ -98,7 +97,7 @@ public class CreditImobServiceImp implements ICreditImobService {
 
                                 }
 
-                                if (a.getMontantMensuelPretPayer() - Calcul_mensualite(a) >= 0) {
+                                if (a.getMontantmensuelpretpayer() - Calcul_mensualite(a) >= 0) {
                                     a.setMensualite(Calcul_mensualite(a));
                                     a.setSTATUS(Status.ACCEPTE);
                                 } else
@@ -130,7 +129,7 @@ public class CreditImobServiceImp implements ICreditImobService {
 
                             }
 
-                                if (a.getMontantMensuelPretPayer() - Calcul_mensualite(a) >= 0) {
+                                if (a.getMontantmensuelpretpayer() - Calcul_mensualite(a) >= 0) {
                                     a.setMensualite(Calcul_mensualite(a));
                                     a.setSTATUS(Status.ACCEPTE);
                                 } else
@@ -159,7 +158,7 @@ public class CreditImobServiceImp implements ICreditImobService {
 
                             }
 
-                                if (a.getMontantMensuelPretPayer() - Calcul_mensualite(a) >= 0) {
+                                if (a.getMontantmensuelpretpayer() - Calcul_mensualite(a) >= 0) {
                                     a.setMensualite(Calcul_mensualite(a));
                                     a.setSTATUS(Status.ACCEPTE);
                                 } else
@@ -201,7 +200,7 @@ public class CreditImobServiceImp implements ICreditImobService {
 
                                 }
 
-                                if (a.getMontantMensuelPretPayer() - Calcul_mensualite(a) >= 0) {
+                                if (a.getMontantmensuelpretpayer() - Calcul_mensualite(a) >= 0) {
                                     a.setMensualite(Calcul_mensualite(a));
                                     a.setSTATUS(Status.ACCEPTE);
                                 } else
@@ -232,7 +231,7 @@ public class CreditImobServiceImp implements ICreditImobService {
 
                                 }
 
-                                if (a.getMontantMensuelPretPayer() - Calcul_mensualite(a) >= 0) {
+                                if (a.getMontantmensuelpretpayer() - Calcul_mensualite(a) >= 0) {
                                     a.setMensualite(Calcul_mensualite(a));
                                     a.setSTATUS(Status.ACCEPTE);
                                 } else
@@ -261,7 +260,7 @@ public class CreditImobServiceImp implements ICreditImobService {
 
                                 }
 
-                                if (a.getMontantMensuelPretPayer() - Calcul_mensualite(a) >= 0) {
+                                if (a.getMontantmensuelpretpayer() - Calcul_mensualite(a) >= 0) {
                                     a.setMensualite(Calcul_mensualite(a));
                                     a.setSTATUS(Status.ACCEPTE);
                                 } else
@@ -287,8 +286,8 @@ public class CreditImobServiceImp implements ICreditImobService {
     }
 
     @Override
-    public List<Credit> retrieveCreditByUser(Long id_user) {
-        return null;
+    public List<CreditImmobilier> retrieveCreditByUser(Long id_user) {
+        return cr.getCreditByUser(id_user) ;
     }
 
 
@@ -302,6 +301,11 @@ public class CreditImobServiceImp implements ICreditImobService {
 
 
         return cr.getActiveCreditImobByUser(id_User) ;
+    }
+
+    @Override
+    public CreditImmobilier retrieveCreditById(Long id) {
+        return cr.findById(id).get();
     }
 
     @Override
@@ -321,12 +325,7 @@ public class CreditImobServiceImp implements ICreditImobService {
 
     @Override
     public CreditImmobilier addCreditt(CreditImmobilier a, Long id_User) {
-        CreditImmobilier ce = cr.getActiveCreditImobByUser(id_User);//
-        if(ce!=null) {
-            a.setMotif("vous ne pouvez pas demander un credit ");
-            a.setSTATUS(Status.REFUS);
-            a.setFinC(Boolean.TRUE);
-        }
+        //CreditImmobilier ce = cr.getActiveCreditImobByUser(id_User);//
             a.setLeMontantDeLaTransaction(a.getApportPersonnel() + a.getMontantCredit());
             a.setDateDemande(new Date());
             float RatioAp = a.getApportPersonnel() / a.getLeMontantDeLaTransaction();
@@ -346,6 +345,7 @@ public class CreditImobServiceImp implements ICreditImobService {
                         float NouTaux = calculTaux(a);
                         if (NouTaux == -1) {
                             a.setSTATUS(Status.REFUS);
+                            System.out.println("tesssst");
                             return a;
                         } else {
                             if (RatioAp >= 0.3 && RatioAp <= 0.5) {
@@ -358,10 +358,15 @@ public class CreditImobServiceImp implements ICreditImobService {
 
                             }
 
-                            if (a.getMontantMensuelPretPayer() - Calcul_mensualite(a) >= 0) {
+                            if (a.getMontantmensuelpretpayer() - Calcul_mensualite(a) >= 0) {
                                 a.setMensualite(Calcul_mensualite(a));
                                 a.setSTATUS(Status.ENCOURSDETRAITEMENT);
                             } else
+                                System.out.println(a.getMontantmensuelpretpayer());
+                            System.out.println(Calcul_mensualite(a));
+
+                                System.out.println("tesssst1");
+
                                 a.setSTATUS(Status.REFUS);
                             a.setFinC(Boolean.TRUE);
 
@@ -396,7 +401,7 @@ public class CreditImobServiceImp implements ICreditImobService {
 
                                     }
 
-                                    if (a.getMontantMensuelPretPayer() - Calcul_mensualite(a) >= 0) {
+                                    if (a.getMontantmensuelpretpayer() - Calcul_mensualite(a) >= 0) {
                                         a.setMensualite(Calcul_mensualite(a));
                                         a.setSTATUS(Status.ENCOURSDETRAITEMENT);
                                     } else
@@ -431,7 +436,7 @@ public class CreditImobServiceImp implements ICreditImobService {
 
                                     }
 
-                                    if (a.getMontantMensuelPretPayer() - Calcul_mensualite(a) >= 0) {
+                                    if (a.getMontantmensuelpretpayer() - Calcul_mensualite(a) >= 0) {
                                         a.setMensualite(Calcul_mensualite(a));
                                         a.setSTATUS(Status.ENCOURSDETRAITEMENT);
                                     } else
@@ -461,7 +466,7 @@ public class CreditImobServiceImp implements ICreditImobService {
 
                                     }
 
-                                    if (a.getMontantMensuelPretPayer() - Calcul_mensualite(a) >= 0) {
+                                    if (a.getMontantmensuelpretpayer() - Calcul_mensualite(a) >= 0) {
                                         a.setMensualite(Calcul_mensualite(a));
                                         a.setSTATUS(Status.ENCOURSDETRAITEMENT);
                                     } else
@@ -504,7 +509,7 @@ public class CreditImobServiceImp implements ICreditImobService {
 
                                     }
 
-                                    if (a.getMontantMensuelPretPayer() - Calcul_mensualite(a) >= 0) {
+                                    if (a.getMontantmensuelpretpayer() - Calcul_mensualite(a) >= 0) {
                                         a.setMensualite(Calcul_mensualite(a));
                                         a.setSTATUS(Status.ENCOURSDETRAITEMENT);
                                     } else
@@ -538,7 +543,7 @@ public class CreditImobServiceImp implements ICreditImobService {
 
                                     }
 
-                                    if (a.getMontantMensuelPretPayer() - Calcul_mensualite(a) >= 0) {
+                                    if (a.getMontantmensuelpretpayer() - Calcul_mensualite(a) >= 0) {
                                         a.setMensualite(Calcul_mensualite(a));
                                         a.setSTATUS(Status.ENCOURSDETRAITEMENT);
                                         a.setFinC(Boolean.TRUE);
@@ -571,9 +576,9 @@ public class CreditImobServiceImp implements ICreditImobService {
 
                                     }
 
-                                    if (a.getMontantMensuelPretPayer() - Calcul_mensualite(a) >= 0) {
+                                    if (a.getMontantmensuelpretpayer() - Calcul_mensualite(a) >= 0) {
                                         a.setMensualite(Calcul_mensualite(a));
-                                        a.setSTATUS(Status.ACCEPTE);
+                                        a.setSTATUS(Status.ENCOURSDETRAITEMENT);
                                         a.setFinC(Boolean.FALSE);
                                     } else
                                         a.setSTATUS(Status.REFUS);
@@ -630,7 +635,7 @@ public class CreditImobServiceImp implements ICreditImobService {
 
     @Override
     public float calculTauxSim(CreditImmobilier a) {
-        float Ratio = a.getMensualite() / (a.getMontantMensuelPretPayer() - a.getChargeMensuel());
+        float Ratio = a.getMensualite() / (a.getMontantmensuelpretpayer() - a.getChargeMensuel());
         float aa=0;
         if (Ratio <= 0.5) {
             switch (a.getLocalisation()) {

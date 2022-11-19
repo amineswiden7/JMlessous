@@ -14,6 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/CreditImob")
+
 public class CreditImobController {
 
 
@@ -24,8 +25,9 @@ public class CreditImobController {
 
     @PostMapping("/add-creditImob/{id}")
     @ResponseBody
+    @CrossOrigin(origins = "http://localhost:4200")
     public CreditImmobilier addCredit(@RequestBody CreditImmobilier c, @PathVariable("id") Long id) {
-
+        System.out.println(c);
         return creditImobService.addCreditt(c, id);
     }
 
@@ -36,7 +38,17 @@ public class CreditImobController {
         return listcre;
     }
 
-    @GetMapping("/simulateur")
+    @GetMapping("/retrieve-all-credit/{id}")
+    @ResponseBody
+    public CreditImmobilier getCreditby( @PathVariable("id") Long id) {
+        CreditImmobilier listcre = creditImobService.retrieveCreditById(id);
+        return listcre;
+    }
+
+
+
+    @CrossOrigin(origins = "http://localhost:4200")
+    @PostMapping("/simulateur")
     public Amortissement Simulation(@RequestBody CreditImmobilier c) {
 
         return creditImobService.Simulateurr(c);
@@ -50,7 +62,13 @@ public class CreditImobController {
 
     }
 
+    @GetMapping("/retrieve-all-creditbyuser/{id}")
+    @ResponseBody
+    public List<CreditImmobilier> getCreditbyuser( @PathVariable("id") Long id) {
+        List<CreditImmobilier> listcre = creditImobService.retrieveCreditByUser(id);
+        return listcre;
 
+    }
 
 
 

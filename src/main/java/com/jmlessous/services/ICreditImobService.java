@@ -1,6 +1,5 @@
 package com.jmlessous.services;
 
-import com.jmlessous.entities.Absence;
 import com.jmlessous.entities.Credit;
 import com.jmlessous.entities.CreditImmobilier;
 import com.jmlessous.entities.Amortissement;
@@ -13,10 +12,11 @@ public interface ICreditImobService {
 
     CreditImmobilier addCredit(CreditImmobilier a );
 
-    List<Credit> retrieveCreditByUser(Long id_user);
+    List<CreditImmobilier> retrieveCreditByUser(Long id_user);
 
     Credit Archive(Long Id_credit);
     Credit retrieveActiveCredit(Long id_User);
+    CreditImmobilier retrieveCreditById(Long id);
     float Calcul_mensualite(CreditImmobilier cr);
 
     CreditImmobilier addCreditt (CreditImmobilier a , Long id_User);
