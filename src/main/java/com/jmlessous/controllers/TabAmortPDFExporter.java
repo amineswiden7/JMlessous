@@ -13,9 +13,9 @@ import java.io.IOException;
 import java.util.List;
 
 public class TabAmortPDFExporter {
-	private List<Amortissement> TabAmortissement;
+	private Amortissement[] TabAmortissement;
 
-	public TabAmortPDFExporter(List<Amortissement> listInvestesment) {
+	public TabAmortPDFExporter( Amortissement [] TabAmortissement) {
 		this.TabAmortissement = TabAmortissement;
 	}
 	
