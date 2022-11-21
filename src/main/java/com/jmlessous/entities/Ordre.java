@@ -1,6 +1,5 @@
 package com.jmlessous.entities;
 
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,32 +9,27 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.Set;
 
 @Entity
+@NoArgsConstructor
 @Getter
 @Setter
 @AllArgsConstructor
-@NoArgsConstructor
-public class ProduitFinancier  implements Serializable {
+public class Ordre implements Serializable {
     @Id
-    @Column(name ="idProduit ")
+    @Column(name ="idOrdre")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idProduit ;
-    private String isin;
-
-    private Float montantAchat;
-
-    private String titre;
+    private Long idOrdre;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date date;
+    private Float  prix;
     private Long quantite;
     @Enumerated(EnumType.STRING)
-    private TypeProduit typeProduit;
-    @Enumerated(EnumType.STRING)
-    private StatusProduit statusProduit;
+    private TypeOrdre typeOrdre;
     @JsonIgnore
-    @ManyToOne
+    @ManyToOne()
     private Portfeuille portfeuille;
-    @JsonIgnore
-    @OneToMany(cascade = CascadeType.ALL, mappedBy="produitFinancier")
-    private Set<Ordre> ordres;
+
+    @ManyToOne()
+    private ProduitFinancier produitFinancier;
 }
