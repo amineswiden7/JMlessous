@@ -1,6 +1,7 @@
 package com.jmlessous.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,9 +25,14 @@ public class Portfeuille implements Serializable {
     @Temporal (TemporalType.DATE)
     private Date dateOuverture;
     private Float  solde;
+    @JsonIgnore
     @OneToOne()
     private Utilisateur utilisateur;
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy="portfeuille")
     private Set<ProduitFinancier> produitFinanciers;
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL, mappedBy="portfeuille")
+    private Set<Ordre> ordres;
 
 }
