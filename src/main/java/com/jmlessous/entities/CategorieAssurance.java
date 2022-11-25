@@ -3,7 +3,7 @@ package com.jmlessous.entities;
 public enum CategorieAssurance {
      AUTOMOBILE,
      HABITATION,
-     SCOLAIRE,
+     RENTE_VIAGERE,
      RESPONSABILITE_CIVILE,
      EMPRUNTEUR
 }

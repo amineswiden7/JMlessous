@@ -31,6 +31,8 @@ public class OffreAssurance  implements Serializable {
     private TypeAssurance type;
     @Enumerated(EnumType.STRING)
     private CategorieAssurance categorie;
+    @Enumerated(EnumType.STRING)
+    private StatutAssurance statut;
     @Column(columnDefinition="LONGTEXT")
     private String description;
     private String shortDescription;

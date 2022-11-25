@@ -85,4 +85,13 @@ public class PortfeuilleController {
     public void addProduitToPortfeuille(@RequestBody ProduitFinancier produit,@PathVariable("id") Long id){
          service.addProduitToPortfeuille(id,produit);
     }*/
+
+    @CrossOrigin(origins = "http://localhost:4200")
+    @GetMapping("/Market/getYearHistoryBySymbol/{symbol}")
+    public Object getHistoryByCode(@PathVariable("symbol") String symbol) {
+        RestTemplate restTemplate = new RestTemplate();
+        String url = "https://www.ilboursa.com/api/charting/GetTicksEOD?symbol="+symbol+"&length=365&period=0&guid=4QGJkkSWRC8zaK_2x5U0QlsfzhyPz0Q3s_NRb_y78kc";
+        Object history = restTemplate.getForObject(url, Object.class);
+        return history;
+    }
 }
