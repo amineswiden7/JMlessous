@@ -1,6 +1,7 @@
 package com.jmlessous.services;
 
 import com.jmlessous.entities.OffreAssurance;
+import com.jmlessous.entities.StatutAssurance;
 import com.jmlessous.entities.TypeAssurance;
 import com.jmlessous.repositories.OffreAssuranceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -78,6 +79,11 @@ public class OffreAssuranceImpl implements IOffreAssuranceService{
     @Override
     public List<OffreAssurance> getOffresByType(TypeAssurance type) {
         return offreRepo.retrieveOffreByType(type);
+    }
+
+    @Override
+    public List<OffreAssurance> getOffresByStatut(StatutAssurance statut) {
+        return offreRepo.retrieveOffreByStatut(statut);
     }
 
     @Override
