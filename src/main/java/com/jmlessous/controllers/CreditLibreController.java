@@ -4,6 +4,7 @@ import com.jmlessous.entities.CreditLibre;
 import com.jmlessous.entities.Garantie;
 
 import com.jmlessous.entities.NiveauEtude;
+import com.jmlessous.entities.Status;
 import com.jmlessous.services.Amortissement;
 
 import com.jmlessous.services.ICreditLibreService;
@@ -27,6 +28,28 @@ public class CreditLibreController
     public List<CreditLibre> getAllCreditLibre() {
         List <CreditLibre> list=creditLibre.retrieveAllCreditLibre();
         return list ;
+    }
+    //http://localhost:8083/JMLessous/ListCreditLibreUser/{idUser}
+    @GetMapping("/ListCreditLibreUser/{idUser}")
+    @ResponseBody
+    public List<CreditLibre> getAllCreditLibreUser(@PathVariable("idUser") Long idUser) {
+        List <CreditLibre> list=creditLibre.listCreditLibreByClient(idUser);
+        return list ;
+    }
+
+    //http://localhost:8083/JMLessous/ListCreditLibreStatus/{status}
+    @GetMapping("/ListCreditLibreStatus/{status}")
+    @ResponseBody
+    public List<CreditLibre> getAllCreditLibreStatus(@PathVariable("status") Status status) {
+        List <CreditLibre> list=creditLibre.listCreditLibreByStatus(status);
+        return list ;
+    }
+    //http://localhost:8083/JMLessous/AccepteCreditLibre/{idCredit}/{status}
+    @PutMapping("/AccepteCreditLibre/{idCredit}/{status}")
+    @ResponseBody
+    public CreditLibre accepterCredit(@PathVariable("idCredit") Long idCredit,@PathVariable("status") Status status) {
+        CreditLibre a=creditLibre.accepterCreditLibre(idCredit,status);
+        return a ;
     }
 
     //http://localhost:8083/JMLessous/AddCreditLibre

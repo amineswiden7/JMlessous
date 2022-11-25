@@ -38,6 +38,30 @@ public class CreditLibreServiceImpl implements ICreditLibreService {
     }
 
     @Override
+    public List<CreditLibre> listCreditLibreByClient(Long idUser) {
+
+
+        return (List<CreditLibre>)  creditLibre.getCreditByUser(idUser);
+    }
+
+    @Override
+    public List<CreditLibre> listCreditLibreByStatus(Status status) {
+        return (List<CreditLibre>) creditLibre.getCreditLibreBySTATUS(status);
+    }
+
+    @Override
+    public CreditLibre accepterCreditLibre(Long idCredit, Status status) {
+        CreditLibre a= creditLibre.findById(idCredit).orElse(null);
+        a.setSTATUS(status);
+        CompteCourant cc = a.getCompteCredit();
+        float x=cc.getSolde()+a.getMontantCredit();
+        cc.setSolde(x);
+        compte.save(cc);
+        creditLibre.save(a);
+        return a ;
+    }
+
+    @Override
 
     public CreditLibre addCreditLibre(CreditLibre credit, Long idUser, Long idGarantie) {
         Utilisateur u=user.findById(idUser).orElse(null);
@@ -91,8 +115,14 @@ public class CreditLibreServiceImpl implements ICreditLibreService {
         {
             //Ratio retard=late_days/period_of credit
 
-            float Ratio_retard=(CalculateLateDays(idUser))/(creditLibre.getIDofLatestCompletedCreditsByClient(idUser).getDuree()*12*30);
-            if (Ratio_retard<0.1)
+            float Ratio_Credit=(credit.getMontantCredit()/CalculatePlusGrandCredit(idUser));
+            System.out.println(Ratio_Credit);
+            Date jourJ=new Date();
+            System.out.println(jourJ);
+            int dureeFin = (int) ((jourJ.getTime() - credit.getDateFin().getTime())/ 1000 * 60 * 60 * 24);
+            System.out.println(dureeFin);
+           if(credit.getFinC()==true && dureeFin>=90 ){
+            if (Ratio_Credit<0.1)
             {
                 credit.setRisque((float) 0.1);
                 credit.setMensualite(mensualite);
@@ -103,9 +133,9 @@ public class CreditLibreServiceImpl implements ICreditLibreService {
                 user.save(u);
                // Acceptation(credit,fund,"Ancien client avec un BON risque ");
             }
-            else if (Ratio_retard>=0.1 && Ratio_retard<=0.25)
+            else if (Ratio_Credit>=0.1 && Ratio_Credit<=0.25)
             {
-                credit.setRisque(Ratio_retard);
+                credit.setRisque(Ratio_Credit);
                 credit.setMensualite(mensualite);
                 credit.getCompteCredit().getUtilisateurC().setCreditAuthorization(false);
                 credit.setMotif("Ancien client avec un risque modérable ");
@@ -122,6 +152,14 @@ public class CreditLibreServiceImpl implements ICreditLibreService {
                 user.save(u);
 
             }
+
+           }
+           else
+           {   credit.setSTATUS(Status.REFUS);
+               credit.setMotif("il faut attendre jusqu'a passer les 180 jour apres le dernier credit");
+
+           }
+
         }
        else
        {
@@ -136,6 +174,22 @@ public class CreditLibreServiceImpl implements ICreditLibreService {
 
         creditLibre.save(credit);
         return credit;
+    }
+
+    public float CalculatePlusGrandCredit(Long idUser){
+        List<CreditLibre> listCredit= creditLibre.getCreditByUser(idUser);
+       CreditLibre cridi = new CreditLibre();
+       float montant=0;
+        for(CreditLibre cr : listCredit)
+        {
+            if(cr.getMontantCredit()>= montant)
+            {
+                cridi=cr;
+                montant= cridi.getMontantCredit();
+            }
+
+        }
+        return montant;
     }
     //Fonction qui calcule les retards enregistré dans le history dues
 
@@ -182,7 +236,7 @@ public class CreditLibreServiceImpl implements ICreditLibreService {
     public float Calcul_mensualite(CreditLibre cr)
     {
         float montant=cr.getMontantCredit();
-        float tauxmensuel=cr.getTauxInteret()/12;
+        float tauxmensuel=cr.getTauxInteret()/1200;
         float period=cr.getDuree()*12;
         float mensualite=(float) ((montant*tauxmensuel)/(1-(Math.pow((1+tauxmensuel),-period ))));
         return mensualite;
@@ -193,9 +247,9 @@ public class CreditLibreServiceImpl implements ICreditLibreService {
     {
 
 
-        double interet=cr.getTauxInteret()/12;
+        double Tauxinteret=cr.getTauxInteret()*0.01/12;
         System.out.println("interet");
-        System.out.println(cr.getTauxInteret());
+        System.out.println(Tauxinteret);
         int leng=(int) (cr.getDuree()*12);
         System.out.println("periode");
         System.out.println(cr.getDuree()*12);
@@ -208,18 +262,23 @@ public class CreditLibreServiceImpl implements ICreditLibreService {
 
 
         amort.setMontantR(cr.getMontantCredit());
-        float mensualite=(float) ((cr.getMontantCredit()*interet)/(1-(Math.pow((1+interet),-leng ))));
+        float mensualite=Calcul_mensualite(cr);
         amort.setMensualite(mensualite);
-        amort.setInterest(amort.getMontantR()*interet);
+        amort.setInterest(amort.getMontantR()*Tauxinteret);
         amort.setAmortissement(amort.getMensualite()-amort.getInterest());
+
+        System.out.println(amort.getMensualite());
+        System.out.println(amort.getInterest());
+        System.out.println(amort.getAmortissement());
         ListAmortissement[0]=amort;
 
         //System.out.println(ListAmortissement[0]);
         for (int i=1;i< cr.getDuree()*12;i++) {
             Amortissement amortPrecedant=ListAmortissement[i-1];
             Amortissement amortNEW=new Amortissement() ;
+            System.out.println(amortPrecedant.getAmortissement());
             amortNEW.setMontantR(amortPrecedant.getMontantR()-amortPrecedant.getAmortissement());
-            amortNEW.setInterest(amortNEW.getMontantR()*interet);
+            amortNEW.setInterest(amortNEW.getMontantR()*Tauxinteret);
             amortNEW.setMensualite(Calcul_mensualite(cr));
             amortNEW.setAmortissement(amortNEW.getMensualite()-amortNEW.getInterest());
             ListAmortissement[i]=amortNEW;
