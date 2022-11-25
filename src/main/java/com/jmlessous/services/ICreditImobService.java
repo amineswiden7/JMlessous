@@ -26,6 +26,9 @@ public interface ICreditImobService {
     Amortissement[] TabAmortissementt(CreditImmobilier cr);
      Amortissement Simulateurr(CreditImmobilier cr);
      void TraitementCredit();
+     void acceptercredit(Long id);
+    void Refusercredit(Long id);
+
 
 
 

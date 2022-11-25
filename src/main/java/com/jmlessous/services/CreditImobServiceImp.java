@@ -5,6 +5,8 @@ import com.jmlessous.repositories.CompteCourantRepository;
 import com.jmlessous.repositories.CreditImobRepository;
 import com.jmlessous.repositories.UtilisateurRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
@@ -21,6 +23,9 @@ public class CreditImobServiceImp implements ICreditImobService {
     CompteCourantRepository cp;
     @Autowired
     UtilisateurRepository u;
+    @Autowired
+    private JavaMailSender mailSender;
+
 
     @Override
     public List<CreditImmobilier> retrieveAllCredit() {
@@ -738,6 +743,55 @@ public class CreditImobServiceImp implements ICreditImobService {
 
         }
 
+    }
+
+    @Override
+    public void acceptercredit(Long id) {
+        CreditImmobilier a = cr.findById(id).orElse(null);
+        if(a.getSTATUS()==Status.ENCOURSDETRAITEMENT){
+            a.setSTATUS(Status.ACCEPTE);
+            CompteCourant com= a.getCompteCredit();
+            com.setSolde(com.getSolde()+a.getMontantCredit());
+            cp.save(com);
+            SimpleMailMessage message = new SimpleMailMessage();
+
+            message.setFrom("bkfinpi@gmail.com");
+            message.setTo(com.getUtilisateurC().getEmail());
+            message.setText("votre demande de prêt a été acceptée");
+            message.setSubject("service de credit ");
+
+            mailSender.send(message);
+            System.out.println("Mail Send...");
+
+
+
+
+        }
+        cr.save(a);
+
+
+    }
+
+    @Override
+    public void Refusercredit(Long id) {
+
+        CreditImmobilier a = cr.findById(id).orElse(null);
+        if(a.getSTATUS()==Status.ENCOURSDETRAITEMENT){
+            a.setSTATUS(Status.REFUS);
+            CompteCourant com= a.getCompteCredit();
+           a.setMotif("votre crédit est trop risqué");
+            SimpleMailMessage message = new SimpleMailMessage();
+
+            message.setFrom("bkfinpi@gmail.com");
+            message.setTo(com.getUtilisateurC().getEmail());
+            message.setText("votre demande de prêt a été acceptée");
+            message.setSubject("service de credit ");
+
+            mailSender.send(message);
+            System.out.println("Mail Send...");
+
+        }
+cr.save(a);
     }
 
 

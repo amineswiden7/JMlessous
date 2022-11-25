@@ -67,6 +67,7 @@ public class CreditImobController {
     public Amortissement[] Sim(@RequestBody CreditImmobilier cr) {
 
 
+
         return creditImobService.TabAmortissementt(cr);
 
     }
@@ -106,7 +107,16 @@ public class CreditImobController {
         //UserExcelExporter exp = new UserExcelExporter(list);
         exp.export(response);
     }
+    @GetMapping("/accepter/{id}")
+    public void accepter( @PathVariable("id") Long id) {
+        creditImobService.acceptercredit(id);
 
+    }
+    @GetMapping("/refuser/{id}")
+    public void refuser( @PathVariable("id") Long id) {
+        creditImobService.Refusercredit(id);
+
+    }
 
 
 
