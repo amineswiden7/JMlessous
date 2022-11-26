@@ -36,6 +36,13 @@ public class CreditLibreController
         List <CreditLibre> list=creditLibre.listCreditLibreByClient(idUser);
         return list ;
     }
+    //http://localhost:8083/JMLessous/CreditLibreID/{idCredit}
+    @GetMapping("/CreditLibreID/{idCredit}")
+    @ResponseBody
+    public CreditLibre getCreditLibre(@PathVariable("idCredit") Long idCredit) {
+       CreditLibre list=creditLibre.getCreditLibreByID(idCredit);
+        return list ;
+    }
 
     //http://localhost:8083/JMLessous/ListCreditLibreStatus/{status}
     @GetMapping("/ListCreditLibreStatus/{status}")

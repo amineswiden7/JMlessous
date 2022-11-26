@@ -45,6 +45,11 @@ public class CreditLibreServiceImpl implements ICreditLibreService {
     }
 
     @Override
+    public CreditLibre getCreditLibreByID(Long idCredit) {
+        return (CreditLibre) creditLibre.findById(idCredit).orElse(null);
+    }
+
+    @Override
     public List<CreditLibre> listCreditLibreByStatus(Status status) {
         return (List<CreditLibre>) creditLibre.getCreditLibreBySTATUS(status);
     }

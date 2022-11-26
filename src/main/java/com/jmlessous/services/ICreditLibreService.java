@@ -14,6 +14,7 @@ public interface ICreditLibreService
 {
     List<CreditLibre> retrieveAllCreditLibre();
     List<CreditLibre> listCreditLibreByClient(Long idUser);
+    CreditLibre getCreditLibreByID(Long idCredit);
     List<CreditLibre> listCreditLibreByStatus(Status status);
     CreditLibre accepterCreditLibre(Long idCredit , Status status);
     CreditLibre addCreditLibre(CreditLibre credit , Long idUser, Long idGarantie);
