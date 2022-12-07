@@ -96,8 +96,7 @@ public class TransactionServiceImp implements ITransactionService{
 		else
 		{
 		code_tr=0;
-	}
-		
+	}		
 		return code_tr ;  
 	}
 	
@@ -128,6 +127,49 @@ public class TransactionServiceImp implements ITransactionService{
 		return "Transaction non approuvée" ; 		 
 	    }
 	}
+	
+	@Override
+	public int addTransactionInter(Transaction s) throws MessagingException, javax.mail.MessagingException {
+		Compte acc_emet = accrepo.findByIban(s.getEmetteur());
+		Compte acc_dest = accrepo.findByIban(s.getDestinataire());
+	
+		int code_tr = sendAttachmentEmail(acc_emet.getUtilisateurC().getEmail()) ;  
+		this.code=code_tr;
+		if  (s.getMontant() < acc_emet.getSolde())  
+		 {
+			acc_emet.setSolde(acc_emet.getSolde()- s.getMontant());
+			s.setComptesTransaction(acc_emet);
+			s.setDateTransaction(new Date());
+			acc_dest.setSolde(acc_dest.getSolde()+s.getMontant());
+		}
+		else
+		{
+		code_tr=0;
+	}
+		
+		return code_tr ;  
+	}
+
+	@Override
+	public String approveTransactionInter(Transaction s) throws MessagingException, javax.mail.MessagingException {
+		if(addTransactionInter(s)==code)
+		{
+		transrepo.save(s);
+		return "Transaction Internationale approuvée " ; 
+		}
+		else 
+		{
+		return "Transaction Internationale non approuvée" ; 		 
+	    }
+	}
+
+	@Override
+	public String approveTransactionAngInter(Transaction s, Long code)
+			throws MessagingException, javax.mail.MessagingException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	
 
 	@Override
@@ -172,7 +214,6 @@ public class TransactionServiceImp implements ITransactionService{
 		  return transrepo.findTransactionByTransactionType(typeTransaction);
 	}
 
-	
 
 	
 	

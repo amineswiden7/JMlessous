@@ -70,7 +70,24 @@ public class TransactionController {
 			return Transaction ;
 			}
 			
-		
+			// http://localhost:8083/JMLessous/add-TransactionInter
+			@PostMapping("/add-TransactionInter")
+			@ResponseBody
+			public int addTransactionInter(@RequestBody Transaction o ) throws MessagingException, javax.mail.MessagingException
+			{
+			int Transaction = transactionService.addTransactionInter(o);
+			return Transaction ;
+			}
+
+		// http://localhost:8083/JMLessous/app-TransactionInterAng/code
+				@PostMapping("/app-TransactionInterAng/{code}")
+				@ResponseBody
+				public String approveTransactionInterAng(@RequestBody Transaction o ,@PathVariable("code") Long code ) throws MessagingException, javax.mail.MessagingException
+				{
+				String Transaction = transactionService.approveTransactionInter(o);
+				return Transaction ;
+				}
+				
 	// http://localhost:8083/JMLessous/retrieve-all-Transactions
 			@GetMapping("/retrieve-all-Transactions")
 			@ResponseBody
