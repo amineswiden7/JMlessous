@@ -1,6 +1,7 @@
 package com.jmlessous.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -29,8 +30,10 @@ public class ContratAssurance implements Serializable {
     private Float prime ;
     private Float intérêt;
     private Float commission ;
+    @JsonIgnore
     @ManyToOne
     private Utilisateur utilisateurCA;
+    @JsonIgnore
     @ManyToOne
     private OffreAssurance offreAssurance;
 

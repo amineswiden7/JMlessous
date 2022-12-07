@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UtilisateurServiceImpl implements IUtilisateurService {
     @Autowired
@@ -37,9 +39,17 @@ public class UtilisateurServiceImpl implements IUtilisateurService {
         return user;
     }
 
+
 	@Override
 	public CompteCourant loadCpt(Long id_user) {
 		CompteCourant cpt = cptRep.getCompteByUser(id_user);
         return cpt;
 	}
+
+    @Override
+    public List<Utilisateur> retrieveAllUtilisateur() {
+        return (List<Utilisateur>) userRep.findAll();
+    }
+
+
 }
