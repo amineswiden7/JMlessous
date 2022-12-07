@@ -9,5 +9,5 @@ import com.jmlessous.entities.CompteCourant;
 @Repository
 public interface CompteRepository extends CrudRepository<Compte,String>{
 	Compte findByRib(String emetteur);
-
+    Compte findByIban(String emetteur);
 }

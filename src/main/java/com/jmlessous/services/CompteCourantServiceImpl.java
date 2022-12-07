@@ -1,5 +1,6 @@
 package com.jmlessous.services;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import com.jmlessous.entities.Compte;
 import com.jmlessous.entities.CompteCourant;
+import com.jmlessous.entities.Transaction;
 import com.jmlessous.entities.Utilisateur;
 import com.jmlessous.repositories.CompteCourantRepository;
 import com.jmlessous.repositories.UtilisateurRepository;
@@ -25,7 +27,7 @@ public class CompteCourantServiceImpl implements ICompteService{
 	
 
 	@Override
-	public Compte addAccountC(CompteCourant c ,Long idUser) {
+	public CompteCourant addAccountC(CompteCourant c ,Long idUser) {
 		Utilisateur utilisateur = utilisateurRepository.findById(idUser).orElse(null);
 		Float s = utilisateur.getSalaire();
 		String r = GenerateRibC();
@@ -34,6 +36,7 @@ public class CompteCourantServiceImpl implements ICompteService{
 		c.setUtilisateurC(utilisateur);
 		c.setRib(r);
 		c.setIban(GenerateIBanC(r));
+		c.setDateOuverture(new Date());
 		comptecourantRepository.save(c);
 		return c;
 	}
@@ -188,6 +191,12 @@ public class CompteCourantServiceImpl implements ICompteService{
 		return IbanC;
 	}
 
+	@Override
+	public List<CompteCourant> CompteCourantByRib(String rib) {
+		
+		return (List<CompteCourant>)comptecourantRepository.getcptByRib(rib);
+	}
+	
 
 	
 

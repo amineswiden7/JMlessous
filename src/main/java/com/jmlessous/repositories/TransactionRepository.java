@@ -23,5 +23,6 @@ public interface TransactionRepository extends CrudRepository<Transaction,Long>{
 	@Query("SELECT t FROM Transaction t WHERE t.CompteCourant.Iban= :iban")
 	List<Transaction> getTransaction2EmiseByRibAccount(@Param("iban") Long Iban);
 	*/
-
+//	@Query("SELECT t FROM Transaction t WHERE t.comptesTransaction.idUser= :idUser")
+	//List<Transaction> getTransactionByidUser(@Param("idUser") Long idUser);
 }
