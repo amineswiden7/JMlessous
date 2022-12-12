@@ -1,5 +1,6 @@
 package com.jmlessous.controllers;
 
+import com.jmlessous.entities.CompteCourant;
 import com.jmlessous.entities.Utilisateur;
 import com.jmlessous.services.IUtilisateurService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,8 +34,16 @@ public class UtilisateurController {
     {
         return utilisateurService.loadUser(id);
     }
+
+    @GetMapping("/ListCpt/{id}")
+    @ResponseBody
+    public CompteCourant affichCpt (@PathVariable("id") Long id )
+    {
+        return utilisateurService.loadCpt(id);}
+
     @GetMapping(value = "findUserByToken")
     public Utilisateur findUserByToken() {
         return   utilisateurService.loadUser(SecurityContextHolder.getContext().getAuthentication().getName()) ;
+
     }
 }

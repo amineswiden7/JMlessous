@@ -1,5 +1,6 @@
 package com.jmlessous.services;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
@@ -52,6 +53,7 @@ public class CompteEpargneServiceImpl implements ICompteEService{
 		e.setInteretAcquis(totalinteret);
 		//solde du compte 
 		e.setSolde(total);
+		e.setDateOuverture(new Date());
 		compteepargneRepository.save(e);
 		return e;
 	}
