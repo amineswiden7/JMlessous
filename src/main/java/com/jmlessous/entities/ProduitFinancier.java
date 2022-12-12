@@ -23,7 +23,7 @@ public class ProduitFinancier  implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idProduit ;
     private String isin;
-
+    private String symbol;
     private Float montantAchat;
 
     private String titre;
