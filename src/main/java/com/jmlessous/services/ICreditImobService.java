@@ -1,6 +1,7 @@
 package com.jmlessous.services;
 
 import com.jmlessous.entities.Credit;
+import com.jmlessous.entities.CreditEtudiant;
 import com.jmlessous.entities.CreditImmobilier;
 import com.jmlessous.entities.Amortissement;
 
@@ -28,7 +29,7 @@ public interface ICreditImobService {
      void TraitementCredit();
      void acceptercredit(Long id);
     void Refusercredit(Long id);
-
+    CreditImmobilier transemtre (CreditImmobilier a );
 
 
 

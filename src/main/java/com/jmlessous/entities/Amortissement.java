@@ -5,6 +5,7 @@ public class Amortissement {
     double interest;
     double amortissement;
     double mensualite;
+
     public double getMontantR() {
         return montantR;
     }

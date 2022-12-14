@@ -5,6 +5,8 @@ import com.jmlessous.repositories.CompteCourantRepository;
 import com.jmlessous.repositories.CreditEtuRepository;
 import com.jmlessous.repositories.UtilisateurRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -24,6 +26,8 @@ public class CreditEtuServiceImp implements ICreditEtu {
     @Autowired
     CreditEtuRepository etu;
     @Autowired
+    private JavaMailSender mailSender;
+    @Autowired
     UtilisateurRepository utilisateurRepository;
     @Autowired
     CompteCourantRepository cc;
@@ -42,6 +46,7 @@ public class CreditEtuServiceImp implements ICreditEtu {
         Utilisateur utilisateur = utilisateurRepository.findById(idUser).orElse(null);
         CreditEtudiant ce = etu.getActiveCreditByUser(idUser);
         CompteCourant c = cc.getCompteByUser(idUser);
+        a.setCompteCredit(c);
 
         if (utilisateur.getProfession() == Profession.ETUDIANT) {
             if (ce == null) {
@@ -66,7 +71,7 @@ public class CreditEtuServiceImp implements ICreditEtu {
 
                 a.setDateDemande(new Date());
                 a.setCompteCredit(cc.getCompteByUser(idUser));
-                etu.save(a);
+               // etu.save(a);
                 if(a.getScore()<30){
                     a.setSTATUS(Status.REFUS);
                     a.setMotif("Risque trés éleve ");
@@ -125,7 +130,7 @@ public class CreditEtuServiceImp implements ICreditEtu {
         //mnt interet
         simulator.setInterest(0);
         //mnt monthly
-        simulator.setMensualite(Calcul_mensualite(credit));
+        simulator.setMensualite(credit.getTauxInteret());
 
         Amortissement[] Credittab = TabAmortissementt(credit);
         float s=0;
@@ -160,7 +165,7 @@ public class CreditEtuServiceImp implements ICreditEtu {
 
 
         amort.setMontantR(c.getMontantCredit());
-        amort.setMensualite(Calcul_mensualite(c));
+        amort.setMensualite(c.getMensualite());
         amort.setInterest(amort.getMontantR()*interest);
         amort.setAmortissement(amort.getMensualite()-amort.getInterest());
         ListAmortissement[0]=amort;
@@ -346,7 +351,64 @@ public class CreditEtuServiceImp implements ICreditEtu {
 
         return score;
     }
-}
+
+    @Override
+    public CreditEtudiant transemtre(CreditEtudiant a) {
+        return etu.save(a);
+    }
+
+    @Override
+    public void acceptercredit(Long id) {
+        CreditEtudiant a = etu.findById(id).orElse(null);
+        if(a.getSTATUS()==Status.ENCOURSDETRAITEMENT){
+            a.setSTATUS(Status.ACCEPTE);
+            //a.setFinC(true);
+            CompteCourant com= a.getCompteCredit();
+            com.setSolde(com.getSolde()+a.getMontantCredit());
+            cc.save(com);
+            SimpleMailMessage message = new SimpleMailMessage();
+
+            message.setFrom("bkfinpi@gmail.com");
+            message.setTo(com.getUtilisateurC().getEmail());
+            message.setText("votre demande de prêt a été acceptée");
+            message.setSubject("service de credit ");
+
+            mailSender.send(message);
+            System.out.println("Mail Send...");
+
+
+
+
+        }
+        etu.save(a);
+    }
+
+    @Override
+    public void Refusercredit(Long id) {
+        CreditEtudiant a = etu.findById(id).orElse(null);
+        if(a.getSTATUS()==Status.ENCOURSDETRAITEMENT){
+            a.setSTATUS(Status.REFUS);
+
+            a.setFinC(true);
+            CompteCourant com= a.getCompteCredit();
+            a.setMotif("votre crédit est trop risqué");
+            SimpleMailMessage message = new SimpleMailMessage();
+
+            message.setFrom("bkfinpi@gmail.com");
+            message.setTo(com.getUtilisateurC().getEmail());
+            message.setText("votre demande de prêt a été réfusée " +
+                    "Merci de consulter notre site Web pour suivre votre Credit ");
+            message.setSubject("service de credit ");
+
+            mailSender.send(message);
+            System.out.println("Mail Send...");
+
+        }
+        etu.save(a);
+    }
+
+    }
+
 
 
 

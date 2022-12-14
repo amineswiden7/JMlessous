@@ -72,15 +72,15 @@ public class CreditImobController {
 
     }
     @GetMapping("/export")
-    public void exportToPDF(HttpServletResponse response,@RequestBody CreditImmobilier cr) throws DocumentException,IOException {
+    public void exportToPDF(HttpServletResponse response,@RequestBody Amortissement[] cr) throws DocumentException,IOException {
         response.setContentType("application/pdf");
         DateFormat dateFormater = new SimpleDateFormat("yyyy-MM-dd_HH:mm");
         String currentDateTime = dateFormater.format(new Date());
         String headerKey = "Content-Disposition";
         String headerValue = "Attachement;filename=inves_"+ currentDateTime + ".pdf";
         response.setHeader(headerKey, headerValue);
-        Amortissement[] listInvestesment = creditImobService.TabAmortissementt(cr);;
-        TabAmortPDFExporter exporter = new TabAmortPDFExporter(listInvestesment);
+        //Amortissement[] listInvestesment = creditImobService.TabAmortissementt(cr);;
+        TabAmortPDFExporter exporter = new TabAmortPDFExporter(cr);
         exporter.export(response);
     }
 
@@ -91,17 +91,17 @@ public class CreditImobController {
         return listcre;
 
     }
-    @PostMapping("/export/excel")
-    @ResponseBody
-    public void exportToExcel(HttpServletResponse response,@RequestBody CreditImmobilier cr) throws IOException {
+    @PostMapping ("/export/excel")
+
+    public void exportToExcel(HttpServletResponse response,@RequestBody Amortissement[] credit) throws DocumentException,IOException {
 
 
         response.setContentType("application/octet-stream");
         String headerKey = "Content-Disposition";
 
-        String headervalue = "attachment; filename=Tableau_Credit_N_" + cr.getIdCredit() + ".xlsx";
+        String headervalue = "attachment; filename=Tableau_Credit_N_.xlsx";
         response.setHeader(headerKey, headervalue);
-        Amortissement[] credit = creditImobService.TabAmortissementt(cr);
+       // Amortissement[] credit = creditImobService.TabAmortissementt(cr);
         List<Amortissement> list = Arrays.asList(credit);
         com.jmlessous.services.ExcelExporter exp = new com.jmlessous.services.ExcelExporter(list);
         //UserExcelExporter exp = new UserExcelExporter(list);
@@ -116,6 +116,14 @@ public class CreditImobController {
     public void refuser( @PathVariable("id") Long id) {
         creditImobService.Refusercredit(id);
 
+    }
+
+    @PostMapping("/add-creditveriff")
+    @ResponseBody
+    public CreditImmobilier addCredit (@RequestBody CreditImmobilier c )
+    {
+
+        return creditImobService.transemtre(c);
     }
 
 

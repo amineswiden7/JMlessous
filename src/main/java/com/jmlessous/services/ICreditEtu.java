@@ -8,6 +8,7 @@ import java.util.List;
 public interface ICreditEtu {
     List<CreditEtudiant> retrieveAllCredit();
 
+
     CreditEtudiant addCredit(CreditEtudiant a , Long id_User);
     CreditEtudiant addCreditSim(CreditEtudiant a );
     Amortissement Simulateurr(CreditEtudiant cr);
@@ -21,6 +22,10 @@ public interface ICreditEtu {
     void ActiverCredit(Long a);
     Hashtable<String,Double> simulation(float montant,float periode, NiveauEtude typeEtudiant);
     Double Scoring(float montant,float periode, NiveauEtude typeEtu);
+
+    CreditEtudiant transemtre(CreditEtudiant a );
+    void acceptercredit(Long id);
+    void Refusercredit(Long id);
 
 
 

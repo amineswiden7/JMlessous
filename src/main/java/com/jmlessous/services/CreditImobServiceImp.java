@@ -394,7 +394,7 @@ public class CreditImobServiceImp implements ICreditImobService {
                                 if (NouTaux == -1) {
                                     a.setSTATUS(Status.REFUS);
                                     a.setFinC(Boolean.TRUE);
-                                    return cr.save(a);
+                                    return a;
                                 } else {
                                     if (RatioAp >= 0.4 && RatioAp <= 0.6) {
                                         a.setTauxNominal(a.getTauxNominal() + NouTaux);
@@ -429,7 +429,7 @@ public class CreditImobServiceImp implements ICreditImobService {
                                 if (NouTaux == -1) {
                                     a.setSTATUS(Status.REFUS);
                                     a.setFinC(Boolean.TRUE);
-                                    return cr.save(a);
+                                    return a;
                                 } else {
                                     if (RatioAp >= 0.2 && RatioAp <= 0.4) {
                                         a.setTauxNominal(a.getTauxNominal() + NouTaux);
@@ -459,7 +459,7 @@ public class CreditImobServiceImp implements ICreditImobService {
                                 if (NouTaux == -1) {
                                     a.setSTATUS(Status.REFUS);
                                     a.setFinC(Boolean.TRUE);
-                                    return cr.save(a);
+                                    return a;
                                 } else {
                                     if (RatioAp >= 0.15 && RatioAp <= 0.35) {
                                         a.setTauxNominal(a.getTauxNominal() + NouTaux);
@@ -607,7 +607,7 @@ public class CreditImobServiceImp implements ICreditImobService {
             }
 
 
-            return cr.save(a);
+            return a;
 
         }
 
@@ -664,7 +664,12 @@ public class CreditImobServiceImp implements ICreditImobService {
 
     @Override
     public Amortissement[] TabAmortissementt(CreditImmobilier cr) {
-        CreditImmobilier c=addCredit(cr);
+        System.out.println("1233");
+        System.out.println(cr.getApportPersonnel());
+        System.out.println("test");
+        System.out.println(cr.getMontantCredit());
+        System.out.println(cr.getLeMontantDeLaTransaction());
+        CreditImmobilier c =addCredit(cr);
         double interest=c.getTauxNominal()/12;
         System.out.println("intereettt");
         System.out.println(c.getTauxNominal());
@@ -784,7 +789,7 @@ public class CreditImobServiceImp implements ICreditImobService {
 
             message.setFrom("bkfinpi@gmail.com");
             message.setTo(com.getUtilisateurC().getEmail());
-            message.setText("votre demande de prêt a été acceptée");
+            message.setText("votre demande de prêt a été réfusée ");
             message.setSubject("service de credit ");
 
             mailSender.send(message);
@@ -792,6 +797,11 @@ public class CreditImobServiceImp implements ICreditImobService {
 
         }
 cr.save(a);
+    }
+
+    @Override
+    public CreditImmobilier transemtre(CreditImmobilier a) {
+        return cr.save(a);
     }
 
 
