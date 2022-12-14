@@ -1,13 +1,20 @@
 package com.jmlessous.entities;
 
-public enum Role {
+import org.springframework.security.core.GrantedAuthority;
+
+public enum Role implements GrantedAuthority {
     ADMIN,
     CLIENT,
-    CONSEILLERCLIENTELE,
-    GESTIONNAIRECLIENTELE,
-    MEMBREDIRECTOIRE,
-    AGENTRH,
-    AGENTMARKETING,
+    CONSEILLER_CLIENTELE,
+    GESTIONNAIRE_CLIENTELE,
+    MEMBRE_DIRECTOIRE,
+    AGENT_RH,
+    AGENT_MARKETING,
     FINANCIER,
-    EMPLOYEASSURANCE
+    EMPLOYE_ASSURANCE;
+
+    @Override
+    public String getAuthority() {
+        return "ROLE_" + name();
+    }
 }

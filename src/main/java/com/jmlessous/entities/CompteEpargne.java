@@ -13,11 +13,20 @@ import java.util.Set;
 @Setter
 @Table(name = "COMPTE_EPARGNE")
 public class CompteEpargne  extends Compte implements Serializable  {
-    /*@Id
+  
+	/*@Id
     @Column(name ="idEpargne ")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idEpargne ;*/
-    private Float tauxRemuneration;
-
+	//private int index_remuneration;
+    private float tauxRemuneration;
+    private float vercement ;
+    private float vercementReg;
+    private float duree;
+    private float totalVercement;
+    private float interetAcquis;
+    private NatureEpargne natureepargne;
+    
+   
 
 }

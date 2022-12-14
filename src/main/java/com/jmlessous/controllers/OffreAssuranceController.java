@@ -1,11 +1,14 @@
 package com.jmlessous.controllers;
 
 import com.jmlessous.entities.OffreAssurance;
+import com.jmlessous.entities.StatutAssurance;
 import com.jmlessous.entities.TypeAssurance;
 import com.jmlessous.services.IOffreAssuranceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.websocket.server.PathParam;
 import java.util.List;
 
 @RestController
@@ -26,10 +29,10 @@ public class OffreAssuranceController {
         return service.retrieveOffre(id);
     }
 
-    @PostMapping("addOffre}")
+    @PostMapping("addOffre")
     @CrossOrigin(origins = "http://localhost:4200")
-    public OffreAssurance addOffre(@RequestBody OffreAssurance offre){
-        return service.addOffre(offre);
+    public OffreAssurance addOffre(@RequestBody OffreAssurance offre/*, @RequestParam("file") MultipartFile file*/){
+        return service.addOffre(offre,null);
     }
 
     @PutMapping("updateoffre}")
@@ -39,21 +42,31 @@ public class OffreAssuranceController {
     }
 
     @DeleteMapping("deleteoffre/{id}")
+    @CrossOrigin(origins = "http://localhost:4200")
     public void deleteOffre(@PathVariable("id") Long id){
         service.deleteOffre(id);
     }
 
     @GetMapping("getAlloffresByType/{type}")
+    @CrossOrigin(origins = "http://localhost:4200")
     public List<OffreAssurance> getOffresByType(@PathVariable("type") TypeAssurance type){
         return service.getOffresByType(type);
     }
 
+    @GetMapping("getAlloffresByStatut/{statut}")
+    @CrossOrigin(origins = "http://localhost:4200")
+    public List<OffreAssurance> getOffresByType(@PathVariable("statut") StatutAssurance statut){
+        return service.getOffresByStatut(statut);
+    }
+
     @GetMapping("getAlloffresByAssurance/{assurance}")
+    @CrossOrigin(origins = "http://localhost:4200")
     public List<OffreAssurance> getOffresByAssurance(@PathVariable("assurance") String assurance){
         return service.getOffresByAssurance(assurance);
     }
 
     @GetMapping("getAllAssurances")
+    @CrossOrigin(origins = "http://localhost:4200")
     public List<String> getAllAssurance(){
         return service.getAllAssurance();
     }

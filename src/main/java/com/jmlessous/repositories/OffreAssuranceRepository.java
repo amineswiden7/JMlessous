@@ -1,6 +1,7 @@
 package com.jmlessous.repositories;
 
 import com.jmlessous.entities.OffreAssurance;
+import com.jmlessous.entities.StatutAssurance;
 import com.jmlessous.entities.TypeAssurance;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -14,6 +15,9 @@ public interface OffreAssuranceRepository extends CrudRepository<OffreAssurance,
 
     @Query("SELECT o from  OffreAssurance o where o.type = ?1")
     List<OffreAssurance> retrieveOffreByType(TypeAssurance type);
+
+    @Query("SELECT o from  OffreAssurance o where o.statut = ?1")
+    List<OffreAssurance> retrieveOffreByStatut(StatutAssurance statut);
 
     @Query("SELECT o from  OffreAssurance o where o.assurance = ?1")
     List<OffreAssurance> retrieveOffreByAssurance(String assurance);
