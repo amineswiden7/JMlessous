@@ -24,11 +24,11 @@ public class AbsenceController {
         return listcom;
     }
     //http://localhost:8083/JMLessous/Absence/add-Absence/{client-id}
-    @PostMapping("/add-Absence/{client-id}")
+    @PostMapping("/add-Absence")
     @ResponseBody
-    public Absence addComplaint(@RequestBody Absence c ,@PathVariable("client-id") Long clientid)
+    public Absence addComplaint(@RequestBody Absence c )
     {
-        Absence absence = abs.addOffre(c,clientid);
+        Absence absence = abs.addOffre(c);
         return absence;
     }
     //http://localhost:8083/JMLessous/Absence/retrieve-all-Absence/{client-id}

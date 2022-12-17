@@ -81,7 +81,7 @@ public class CreditImobServiceImp implements ICreditImobService {
                 case "Maison": {
 
                     switch (a.getDestination()) {
-                        case "résidence principale": {
+                        case "residence principale": {
                             RatioAp =a.getMontantReventResidencePrincipal()/a.getLeMontantDeLaTransaction()+RatioAp;
 
                             a.setTauxNominal((float) 0.05);
@@ -116,7 +116,7 @@ public class CreditImobServiceImp implements ICreditImobService {
                         }
                         break;
 
-                        case "résidence secondaire": {
+                        case "residence secondaire": {
 
                             a.setTauxNominal((float) 0.07);
                             a.setMensualite(Calcul_mensualite(a));
@@ -185,7 +185,7 @@ public class CreditImobServiceImp implements ICreditImobService {
                 break;
                 case "appartement": {
                     switch (a.getDestination()) {
-                        case "résidence principale": {
+                        case "residence principale": {
                             RatioAp = a.getMontantReventResidencePrincipal() / a.getLeMontantDeLaTransaction() + RatioAp;
 
                             a.setTauxNominal((float) 0.05);
@@ -218,7 +218,7 @@ public class CreditImobServiceImp implements ICreditImobService {
 
                         }
                         break;
-                        case "résidence secondaire": {
+                        case "residence secondaire": {
                             a.setTauxNominal((float) 0.07);
                             a.setMensualite(Calcul_mensualite(a));
                             float NouTaux = calculTauxSim(a);
@@ -385,7 +385,7 @@ public class CreditImobServiceImp implements ICreditImobService {
                     case "Maison": {
 
                         switch (a.getDestination()) {
-                            case "résidence principale": {
+                            case "residence principale": {
                                 RatioAp = a.getMontantReventResidencePrincipal() / a.getLeMontantDeLaTransaction() + RatioAp;
 
                                 a.setTauxNominal((float) 0.05);
@@ -421,7 +421,7 @@ public class CreditImobServiceImp implements ICreditImobService {
                             }
                             break;
 
-                            case "résidence secondaire": {
+                            case "residence secondaire": {
 
                                 a.setTauxNominal((float) 0.07);
                                 a.setMensualite(Calcul_mensualite(a));
@@ -492,7 +492,7 @@ public class CreditImobServiceImp implements ICreditImobService {
                     break;
                     case "appartement": {
                         switch (a.getDestination()) {
-                            case "résidence principale": {
+                            case "residence principale": {
                                 RatioAp = a.getMontantReventResidencePrincipal() / a.getLeMontantDeLaTransaction() + RatioAp;
 
                                 a.setTauxNominal((float) 0.05);
@@ -528,7 +528,7 @@ public class CreditImobServiceImp implements ICreditImobService {
 
                             }
                             break;
-                            case "résidence secondaire": {
+                            case "residence secondaire": {
                                 a.setTauxNominal((float) 0.07);
                                 a.setMensualite(Calcul_mensualite(a));
                                 float NouTaux = calculTaux(a);
