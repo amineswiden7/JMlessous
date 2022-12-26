@@ -1,9 +1,11 @@
 package com.jmlessous.services;
 
+
 import java.io.File;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.mail.SimpleMailMessage;
@@ -12,8 +14,17 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 
 import org.springframework.stereotype.Service;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
+import java.io.File;
+
+
+import org.springframework.stereotype.Service;
+
+
 @Service
 public class EmailSenderService {
+
 
 	 @Autowired
 	    private JavaMailSender mailSender;
@@ -22,8 +33,13 @@ public class EmailSenderService {
 	                                String body,
 	                                String subject) {
 	        SimpleMailMessage message = new SimpleMailMessage();
+
+
+	        message.setFrom("bkfinpi@gmail.com");
+
 //mel banca
 	        message.setFrom("khadija.azzouz@esprit.tn");
+
 	        message.setTo(toEmail);
 	        message.setText(body);
 	        message.setSubject(subject);
@@ -55,4 +71,18 @@ public class EmailSenderService {
 
 	        mailSender.send(mimeMessage);
 	        System.out.println("Mail Send...");
-}}
+
+
+	    }
+	    
+	   
+	
+	
+	
+	
+	
+	
+}
+
+
+

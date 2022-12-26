@@ -50,9 +50,9 @@ public class CompteController {
 	//http://localhost:8083/JMLessous/AddAccount
 	@PostMapping("/AddAccount/{idUser}")
 	@ResponseBody
-	public Compte AddAccount (@RequestBody CompteCourant c ,@PathVariable ("idUser")  Long idUser)
+	public CompteCourant AddAccount (@RequestBody CompteCourant c ,@PathVariable ("idUser")  Long idUser)
 	{
-		return compteService.addAccountC(c,idUser) ;
+		return (CompteCourant) compteService.addAccountC(c,idUser) ;
 	}
 	
 	//http://localhost:8083/JMLessous/AddAccountE

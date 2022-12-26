@@ -1,5 +1,6 @@
 package com.jmlessous.controllers;
 
+import com.fasterxml.jackson.core.JsonParser;
 import com.jmlessous.entities.Portfeuille;
 import com.jmlessous.entities.Portfeuille;
 import com.jmlessous.entities.ProduitFinancier;
@@ -9,10 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import springfox.documentation.spring.web.json.Json;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Set;
+
+import java.util.*;
 
 @RestController
 //@RequestMapping("/Market")
@@ -88,10 +89,25 @@ public class PortfeuilleController {
 
     @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/Market/getYearHistoryBySymbol/{symbol}")
-    public Object getHistoryByCode(@PathVariable("symbol") String symbol) {
-        RestTemplate restTemplate = new RestTemplate();
-        String url = "https://www.ilboursa.com/api/charting/GetTicksEOD?symbol="+symbol+"&length=365&period=0&guid=4QGJkkSWRC8zaK_2x5U0QlsfzhyPz0Q3s_NRb_y78kc";
-        Object history = restTemplate.getForObject(url, Object.class);
-        return history;
+    public ArrayList<Float> getHistoryByCode(@PathVariable("symbol") String symbol) {
+        return service.getCloses(symbol);
     }
+    @CrossOrigin(origins = "http://localhost:4200")
+    @GetMapping("/portfeuilleCloses/{id}")
+    public Object portfeuilleCloses(@PathVariable("id") Long id) {
+        return service.portfeuilleCloses(id);
+    }
+
+    @GetMapping("getCapitals/{id}")
+    @CrossOrigin(origins = "http://localhost:4200")
+    public Set<Float> getCapitals(@PathVariable("id") Long id){
+        return service.rerieveCapitals(id);
+    }
+
+    @CrossOrigin(origins = "http://localhost:4200")
+    @GetMapping("/portfeuilleVar/{id}")
+    public Object portfeuilleCar(@PathVariable("id") Long id) {
+        return service.varPortfeuille(id);
+    }
+
 }

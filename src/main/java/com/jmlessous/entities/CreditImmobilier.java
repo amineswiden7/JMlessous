@@ -17,4 +17,15 @@ public class CreditImmobilier  extends Credit implements Serializable {
 
     private Float tauxNominal;
     private String type;
+    private String Objet;
+    private String Produit;
+    private String destination;
+    private  float LeMontantDeLaTransaction;
+    private float apportPersonnel;
+    private float montantmensuelpretpayer;
+    private float MontantReventResidencePrincipal;
+    private float chargeMensuel;
+    @Enumerated(EnumType.STRING)
+    private Localisation localisation;
+
 }

@@ -1,9 +1,6 @@
 package com.jmlessous.services;
 
-import com.jmlessous.entities.Credit;
-import com.jmlessous.entities.CreditEtudiant;
-import com.jmlessous.entities.CreditImmobilier;
-import com.jmlessous.entities.NiveauEtude;
+import com.jmlessous.entities.*;
 
 import java.util.Hashtable;
 import java.util.List;
@@ -11,7 +8,11 @@ import java.util.List;
 public interface ICreditEtu {
     List<CreditEtudiant> retrieveAllCredit();
 
+
     CreditEtudiant addCredit(CreditEtudiant a , Long id_User);
+    CreditEtudiant addCreditSim(CreditEtudiant a );
+    Amortissement Simulateurr(CreditEtudiant cr);
+    Amortissement[] TabAmortissementt(CreditEtudiant cr);
 
     List<CreditEtudiant> retrieveCreditByUser(Long id_user);
 
@@ -20,6 +21,11 @@ public interface ICreditEtu {
     float Calcul_mensualite(CreditEtudiant cr);
     void ActiverCredit(Long a);
     Hashtable<String,Double> simulation(float montant,float periode, NiveauEtude typeEtudiant);
+    Double Scoring(float montant,float periode, NiveauEtude typeEtu);
+
+    CreditEtudiant transemtre(CreditEtudiant a );
+    void acceptercredit(Long id);
+    void Refusercredit(Long id);
 
 
 
