@@ -9,6 +9,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -22,13 +23,24 @@ public class ContratAssurance implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idContrat;
     @Temporal (TemporalType.DATE)
-    private Date dateDébut;
+    private Date dateDebut;
     @Temporal (TemporalType.DATE)
     private Date dateFin;
-
+    private LocalDate dateAjout;
+    private Long cinAssure;
+    private Long telAssure;
+    private String emailAssure;
+    private String nomPrenomAssure;
+    @Enumerated(EnumType.STRING)
+    private TypeAssurance type;
+    @Enumerated(EnumType.STRING)
+    private CategorieAssurance categorie;
+    @Enumerated(EnumType.STRING)
+    private StatutContratAssurance statut;
+    private Boolean regulated;
     private Float annuité;
     private Float prime ;
-    private Float intérêt;
+    private Float interet;
     private Float commission ;
     @JsonIgnore
     @ManyToOne

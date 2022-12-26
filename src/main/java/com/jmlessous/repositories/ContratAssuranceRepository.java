@@ -19,4 +19,7 @@ public interface ContratAssuranceRepository extends CrudRepository<ContratAssura
     @Query("SELECT c from  ContratAssurance c join OffreAssurance o on c.offreAssurance.idOffreAssurance=o.idOffreAssurance where o.type = ?1")
     List<ContratAssurance> retrieveContratByTypeAssurance(TypeAssurance t);
 
+    @Query("SELECT c from  ContratAssurance c where c.offreAssurance.idOffreAssurance = ?1")
+    List<ContratAssurance> retrieveContratsByOffre(Long offreId);
+
 }
