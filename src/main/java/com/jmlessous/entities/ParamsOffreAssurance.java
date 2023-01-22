@@ -7,4 +7,13 @@ public class ParamsOffreAssurance {
     public Float nbreCirc;
     public String puissance;
     public String classe;
+    public Float montant;
+    public Float interet;
+    public Float annuite;
+    public int nbreAnnuite;
+    public int age;
+    public boolean isUnique;
+    public int ageDebutRemb;
+    public int nbreRemb;
+
 }

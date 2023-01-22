@@ -32,13 +32,6 @@ public class ContratAssuranceServiceImpl implements IContratAssuranceService{
     public ContratAssurance addContrat(ContratAssurance c,Long idOffre, Long idUser) throws ParseException {
         System.out.println("Contrat ajouté");
         OffreAssurance o = offreRepo.findById(idOffre).get();
-        System.out.println("Done 10001");
-        o.setNbreContrats(o.getNbreContrats()+1);
-        System.out.println("Done 10002");
-        o.setGainTotal(o.getGainTotal()+c.getPrime()*o.getCommission()/100);
-        System.out.println("Done 10003");
-        offreRepo.save(o);
-        System.out.println("Done 1000");
         Utilisateur u = utilisateurRepo.findById(idUser).get();
         c.setOffreAssurance(o);
         c.setUtilisateurCA(u);
@@ -99,6 +92,10 @@ public class ContratAssuranceServiceImpl implements IContratAssuranceService{
     @Override
     public ContratAssurance acceptContrat(Long id) {
         ContratAssurance contrat = contratRepo.findById(id).get();
+        OffreAssurance o = offreRepo.findById(contrat.getOffreAssurance().getIdOffreAssurance()).get();
+        o.setNbreContrats(o.getNbreContrats()+1);
+        o.setGainTotal(o.getGainTotal()+contrat.getPrime()*o.getCommission()/100);
+        offreRepo.save(o);
         contrat.setStatut(StatutContratAssurance.REGULATED);
         return contratRepo.save(contrat);
     }
