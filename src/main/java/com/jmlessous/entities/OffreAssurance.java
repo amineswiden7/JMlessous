@@ -54,10 +54,11 @@ public class OffreAssurance  implements Serializable {
     @Column(name ="idOffreAssurance ")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idOffreAssurance ;
-    private Float minInteret;
-    private Float maxInteret;
-    private Long minPeriode;
-    private Long maxPeriode;
+    private int minAge;
+    private int maxAge;
+    private Float interet;
+    private Float minPeriode;
+    private Float maxPeriode;
     @Enumerated(EnumType.STRING)
     private TypePeriode typePeriode;
     @Enumerated(EnumType.STRING)
@@ -87,6 +88,7 @@ public class OffreAssurance  implements Serializable {
     private Map<String,Float> scorePuissance;
     private String lienForm;
     private String lienLogo;
+    private Float seuilCouv;
     @Lob
     @Column(columnDefinition = "MEDIUMBLOB")
     private String image;

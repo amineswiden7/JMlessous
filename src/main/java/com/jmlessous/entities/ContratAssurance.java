@@ -40,6 +40,10 @@ public class ContratAssurance implements Serializable {
     private Boolean regulated;
     private Float annuité;
     private Float prime ;
+    private String typePrime;
+    private int nbreAnnuites;
+    private int nbreRemb;
+    private Float montantRente;
     private Float interet;
     private Float commission ;
     @JsonIgnore
