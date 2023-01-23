@@ -7,6 +7,6 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import com.jmlessous.entities.Formation;
 
-public interface FormationRepository extends CrudRepository<Formation,String>{
+public interface FormationRepository extends CrudRepository<Formation,Long>{
 	
 }

@@ -33,7 +33,7 @@ public class FormationServiceImpl implements IFormationService {
 
 
 	@Override
-	public Formation retrieveFormation(String idFormation) {
+	public Formation retrieveFormation(Long idFormation) {
 		return formarepo.findById(idFormation).orElse(null);
 	}
 
@@ -46,7 +46,7 @@ public class FormationServiceImpl implements IFormationService {
 
 
 	@Override
-	public void deleteFormation(String idFormation) {
+	public void deleteFormation(Long idFormation) {
 		formarepo.deleteById(idFormation);
 	}
 

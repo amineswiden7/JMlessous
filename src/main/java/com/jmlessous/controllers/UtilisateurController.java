@@ -39,7 +39,8 @@ public class UtilisateurController {
     @ResponseBody
     public CompteCourant affichCpt (@PathVariable("id") Long id )
     {
-        return utilisateurService.loadCpt(id);}
+        return (CompteCourant) utilisateurService.loadCpt(id);
+        }
 
     @GetMapping(value = "findUserByToken")
     public Utilisateur findUserByToken() {
