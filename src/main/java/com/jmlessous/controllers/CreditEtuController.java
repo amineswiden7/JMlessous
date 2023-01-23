@@ -23,10 +23,16 @@ public class CreditEtuController {
     @Autowired
     IUtilisateurService utilisateurService;
 
-    @GetMapping("/retrieve-all-credit")
+    @GetMapping("/retrieve-all-creditImob")
     @ResponseBody
     public List<CreditEtudiant> getCredit() {
         List<CreditEtudiant> listcre = creditEtu.retrieveAllCredit();
+        return listcre;
+    }
+    @GetMapping("/retrieve-all-creditImob/{id}")
+    @ResponseBody
+    public List<CreditEtudiant> getCreditby(@PathVariable("id") Long id) {
+        List<CreditEtudiant> listcre = creditEtu.retrieveCreditByUser(id);
         return listcre;
     }
 
@@ -40,11 +46,33 @@ public class CreditEtuController {
         return creditEtu.addCredit(c,id);
     }
 
+
+
+    @PostMapping("/add-creditverif")
+    @ResponseBody
+    public CreditEtudiant addCredit (@RequestBody CreditEtudiant c )
+    {
+
+        return creditEtu.transemtre(c);
+    }
+
     @GetMapping("simulator/{amount}/{period}/{typePeriod}")
     public Hashtable<String, Double> Simulation(@PathVariable float amount, @PathVariable float period, @PathVariable NiveauEtude typePeriod ){
         return creditEtu.simulation(amount,period,typePeriod);
     }
+    @GetMapping("score/{amount}/{period}/{typePeriod}")
+    public Double scoring(@PathVariable float amount, @PathVariable float period, @PathVariable NiveauEtude typePeriod ){
+        return creditEtu.Scoring(amount,period,typePeriod);
+    }
+    @GetMapping("/accepter/{id}")
+    public void accepter( @PathVariable("id") Long id) {
+        creditEtu.acceptercredit(id);
 
+    }
+    @GetMapping("/refuser/{id}")
+    public void refuser( @PathVariable("id") Long id) {
+        creditEtu.Refusercredit(id);
+    }
 
 
 
