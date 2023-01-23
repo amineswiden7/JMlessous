@@ -1,10 +1,7 @@
 package com.jmlessous.services;
 
 import com.jmlessous.entities.*;
-import com.jmlessous.repositories.OffreAssuranceRepository;
-import com.jmlessous.repositories.OrdreRepository;
-import com.jmlessous.repositories.PortfeuilleRepository;
-import com.jmlessous.repositories.ProduitFinancierRepository;
+import com.jmlessous.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +19,10 @@ public class ProduitFinancierServiceImpl implements IProduitFinancierService{
     PortfeuilleRepository repoPort;
     @Autowired
     OrdreRepository ordreRepository;
+    @Autowired
+    CompteRepository accrepo ;
+    @Autowired
+    IUtilisateurService utilisateurService;
     @Override
     public List<ProduitFinancier> retrieveAllProduits() {
         return (List<ProduitFinancier>) repository.findAll();
@@ -106,6 +107,7 @@ public class ProduitFinancierServiceImpl implements IProduitFinancierService{
                 o.setProduitFinancier(repository.save(produit));
                 ordreRepository.save(o);
 
+
                 return produit;
             }
 
@@ -167,6 +169,11 @@ public class ProduitFinancierServiceImpl implements IProduitFinancierService{
         o.setTypeOrdre(TypeOrdre.VENTE);
         o.setPortfeuille(portfeuille);
         ordreRepository.save(o);
+        Compte acc_dest = accrepo.findByRib("0192000410BC6FTJQJ5VS11");
+        System.out.println("solde avant : "+acc_dest.getSolde());
+        acc_dest.setSolde(acc_dest.getSolde()+(prix*qte*0.005f));
+        System.out.println("solde apres : "+acc_dest.getSolde());
+        accrepo.save(acc_dest);
 
     }
 }

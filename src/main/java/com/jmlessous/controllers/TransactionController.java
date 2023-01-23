@@ -140,5 +140,7 @@ public class TransactionController {
 				ReleveBancPDF exporter2 = new ReleveBancPDF(listTransaction,cptcs,rib);				
 				exporter.export(response);
 			
-			} 		
+			}
+
 }
+

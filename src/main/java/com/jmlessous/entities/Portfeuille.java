@@ -25,7 +25,7 @@ public class Portfeuille implements Serializable {
     @Temporal (TemporalType.DATE)
     private Date dateOuverture;
     private Float  solde;
-    @JsonIgnore
+
     @OneToOne()
     private Utilisateur utilisateur;
     @JsonIgnore
