@@ -22,6 +22,8 @@ public interface ITransactionService {
 	
 	List <Transaction> AllTransaction();
 	List <Transaction> TransactionByRib(String rib);
+	List <Transaction> TransactionBycpt(Long numCompte);
+
 	Transaction AffTransaction (Long id);
 	public Transaction AnnulerTransaction(Transaction t);
 	void SuppTransaction(Long id);

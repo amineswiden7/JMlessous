@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.jmlessous.entities.Compte;
 import com.jmlessous.entities.CompteCourant;
 import com.jmlessous.entities.CompteEpargne;
+import com.jmlessous.entities.ContratAssurance;
 import com.jmlessous.entities.Utilisateur;
 import com.jmlessous.services.CompteEpargneServiceImpl;
 import com.jmlessous.services.Epargne;
@@ -46,6 +47,36 @@ public class CompteController {
 			List <CompteCourant> list=compteService.retrieveAllAccountsC();
 			return list ; 
 		} 
+		
+		//http://localhost:8083/JMLessous/compte/1
+		 @GetMapping("compte/{id}")
+		    public CompteCourant getCompteById(@PathVariable("id") Long id){
+		        return compteService.retrieveAccount(id);
+		    }
+		 
+			//http://localhost:8083/JMLessous/comptee/1
+		 @GetMapping("compteE/{id}")
+		    public CompteEpargne getCompteeById(@PathVariable("id") Long id){
+		        return compteEService.retrieveAccount(id);
+		    }
+		
+		//http://localhost:8083/JMLessous/Lista/1
+		@GetMapping("/Lista/{idUser}")
+		@ResponseBody
+		public List<CompteCourant> getcptUser(
+				@PathVariable("idUser") Long idUser) {
+			List <CompteCourant> list=compteService.CompteCourantByUser(idUser);
+			return list ; 
+		} 
+		
+		//http://localhost:8083/JMLessous/ListaE/1
+				@GetMapping("/ListaE/{idUser}")
+				@ResponseBody
+				public List<CompteEpargne> getcptEUser(
+						@PathVariable("idUser") Long idUser) {
+					List <CompteEpargne> liste=compteEService.CompteEpargneByUser(idUser);
+					return liste ; 
+				} 
 		
 	//http://localhost:8083/JMLessous/AddAccount
 	@PostMapping("/AddAccount/{idUser}")
