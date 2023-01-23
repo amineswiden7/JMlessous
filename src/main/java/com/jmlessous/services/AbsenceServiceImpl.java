@@ -22,9 +22,12 @@ public class AbsenceServiceImpl implements IAbsenceService{
     }
 
     @Override
-    public Absence addOffre(Absence a, Long id) {
-        Utilisateur u = utilisateurRepo.findById(id).orElse(null);
+    public Absence addOffre(Absence a) {
+        //Utilisateur u = utilisateurRepo.findById(id).orElse(null);
+
+        Utilisateur u = a.getUtilisateursAbsence();
         a.setUtilisateursAbsence(u);
+       // a.setUtilisateursAbsence(a.getUtilisateursAbsence());
 
         return absenceRepo.save(a);
     }
