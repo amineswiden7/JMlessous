@@ -1,9 +1,7 @@
 package com.jmlessous.services;
 
 import com.jmlessous.entities.Credit;
-import com.jmlessous.entities.CreditEtudiant;
 import com.jmlessous.entities.CreditImmobilier;
-import com.jmlessous.entities.Amortissement;
 
 
 import java.util.List;
@@ -24,7 +22,7 @@ public interface ICreditImobService {
 
     float calculTaux(CreditImmobilier a );
     float calculTauxSim(CreditImmobilier a);
-    Amortissement[] TabAmortissementt(CreditImmobilier cr);
+    com.jmlessous.services.Amortissement[] TabAmortissementt(CreditImmobilier cr);
      Amortissement Simulateurr(CreditImmobilier cr);
      void TraitementCredit();
      void acceptercredit(Long id);

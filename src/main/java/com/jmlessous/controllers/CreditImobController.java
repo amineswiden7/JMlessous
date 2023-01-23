@@ -1,10 +1,9 @@
 package com.jmlessous.controllers;
 
 
-import com.jmlessous.entities.Amortissement;
-import com.jmlessous.entities.CreditEtudiant;
+import com.jmlessous.repositories.CreditImobRepository;
+import com.jmlessous.services.Amortissement;
 import com.jmlessous.entities.CreditImmobilier;
-import com.jmlessous.services.ICreditEtu;
 import com.jmlessous.services.ICreditImobService;
 import com.jmlessous.services.IUtilisateurService;
 import com.lowagie.text.DocumentException;
@@ -29,6 +28,9 @@ public class CreditImobController {
     ICreditImobService creditImobService;
     @Autowired
     IUtilisateurService utilisateurService;
+    @Autowired
+    CreditImobRepository crr;
+    Amortissement[] aaa ;
 
     @PostMapping("/add-creditImob/{id}")
     @ResponseBody
@@ -58,7 +60,10 @@ public class CreditImobController {
     @PostMapping("/simulateur")
     public Amortissement Simulation(@RequestBody CreditImmobilier c) {
 
+        Amortissement a = creditImobService.Simulateurr(c);
+        this.aaa=creditImobService.TabAmortissementt(c);
         return creditImobService.Simulateurr(c);
+
     }
 
 
@@ -80,7 +85,8 @@ public class CreditImobController {
         String headerValue = "Attachement;filename=inves_"+ currentDateTime + ".pdf";
         response.setHeader(headerKey, headerValue);
         //Amortissement[] listInvestesment = creditImobService.TabAmortissementt(cr);;
-        TabAmortPDFExporter exporter = new TabAmortPDFExporter(cr);
+
+        TabAmortPDFExporter exporter = new TabAmortPDFExporter(this.aaa);
         exporter.export(response);
     }
 
@@ -91,9 +97,9 @@ public class CreditImobController {
         return listcre;
 
     }
-    @PostMapping ("/export/excel")
+    @GetMapping ("/export/excel")
 
-    public void exportToExcel(HttpServletResponse response,@RequestBody Amortissement[] credit) throws DocumentException,IOException {
+    public void exportToExcel(HttpServletResponse response) throws DocumentException,IOException {
 
 
         response.setContentType("application/octet-stream");
@@ -101,8 +107,8 @@ public class CreditImobController {
 
         String headervalue = "attachment; filename=Tableau_Credit_N_.xlsx";
         response.setHeader(headerKey, headervalue);
-       // Amortissement[] credit = creditImobService.TabAmortissementt(cr);
-        List<Amortissement> list = Arrays.asList(credit);
+     //  Amortissement[] credit = creditImobService.TabAmortissementt(this.aaa);
+        List<Amortissement> list = Arrays.asList(this.aaa);
         com.jmlessous.services.ExcelExporter exp = new com.jmlessous.services.ExcelExporter(list);
         //UserExcelExporter exp = new UserExcelExporter(list);
         exp.export(response);

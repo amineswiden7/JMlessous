@@ -1,6 +1,6 @@
 package com.jmlessous.controllers;
 
-import com.jmlessous.entities.Amortissement;
+import com.jmlessous.services.Amortissement;
 import com.lowagie.text.*;
 import com.lowagie.text.pdf.PdfPCell;
 import com.lowagie.text.pdf.PdfPTable;
@@ -10,7 +10,6 @@ import com.lowagie.text.pdf.PdfWriter;
 import javax.servlet.http.HttpServletResponse;
 import java.awt.*;
 import java.io.IOException;
-import java.util.List;
 
 public class TabAmortPDFExporter {
 	private Amortissement[] TabAmortissement;
@@ -18,7 +17,7 @@ public class TabAmortPDFExporter {
 	public TabAmortPDFExporter( Amortissement [] TabAmortissement) {
 		this.TabAmortissement = TabAmortissement;
 	}
-	
+
 	private void writeTableHeader(PdfPTable table) {
 		PdfPCell cell = new PdfPCell();
 		cell.setBackgroundColor(Color.CYAN);

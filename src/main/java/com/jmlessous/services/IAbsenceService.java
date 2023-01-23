@@ -9,7 +9,7 @@ public interface IAbsenceService {
 
     List<Absence> retrieveAllAbsences();
 
-    Absence addOffre(Absence a , Long id_user);
+    Absence addOffre(Absence a );
 
     List<Absence> retrieveAbsenceByUser(Long id_user);
 
