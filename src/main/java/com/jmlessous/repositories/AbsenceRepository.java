@@ -13,7 +13,8 @@ public interface AbsenceRepository  extends CrudRepository<Absence,Long> {
     @Query("SELECT c FROM Absence c WHERE c.utilisateursAbsence.cin= :cin")
     List<Absence> getAbsenceByUser(@Param("cin") Long CinUser);
 
-
+    @Query("SELECT c FROM Absence c WHERE c.utilisateursAbsence.idUser= :idUser")
+    List<Absence> getAbsenceByIdUser(@Param("idUser") Long idUser);
 
 
 

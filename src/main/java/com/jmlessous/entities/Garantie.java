@@ -1,6 +1,7 @@
 package com.jmlessous.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,6 +28,7 @@ public class Garantie  implements Serializable {
     @Temporal (TemporalType.DATE)
     private Date date;
     private String etat;
-    @OneToOne
+    @JsonIgnore
+    @OneToOne(cascade = CascadeType.ALL, mappedBy="garantie")
     private Credit credit;
 }

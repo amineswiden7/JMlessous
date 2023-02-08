@@ -10,5 +10,8 @@ public interface IUtilisateurService {
     Utilisateur addUser(Utilisateur u);
     Utilisateur loadUser(Long id_user);
     public List<Utilisateur> retrieveAllUtilisateur();
+    float affecterSalaire(Long id_user);
+
+
 
 }

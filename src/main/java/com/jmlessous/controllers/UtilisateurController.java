@@ -21,6 +21,12 @@ public class UtilisateurController {
     {
         return utilisateurService.addUser(c);
     }
+    @GetMapping("/affecterSalaire/{id}")
+    @ResponseBody
+    public float affecterSalaire (@PathVariable("id") Long id)
+    {
+        return utilisateurService.affecterSalaire(id);
+    }
     @GetMapping("/ListUser")
     @ResponseBody
     public List<Utilisateur> affichUser ( )

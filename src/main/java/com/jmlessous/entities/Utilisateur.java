@@ -1,5 +1,6 @@
 package com.jmlessous.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -52,6 +53,7 @@ public class Utilisateur implements Serializable, UserDetails {
     private Set<Compte> comptes;
     @ManyToMany(mappedBy="utilisateursFormation", cascade = CascadeType.ALL)
     private Set<Formation> formations;
+    @JsonIgnore
     @OneToMany(mappedBy="utilisateursAbsence", cascade = CascadeType.ALL)
     private Set<Absence> absences;
     @OneToMany(cascade = CascadeType.ALL, mappedBy="utilisateurCA")

@@ -25,6 +25,11 @@ public class GarantieServiceImpl implements IGarantieService{
     }
 
     @Override
+    public Garantie getGarantie(Long idCredit) {
+        return garantieRepo.getGarantieByCreditIdCredit(idCredit);
+    }
+
+    @Override
     public void deleteGarantie(Long idGarantie) {
         garantieRepo.deleteById(idGarantie);
     }
