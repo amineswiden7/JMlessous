@@ -41,8 +41,8 @@ public class UtilisateurServiceImpl implements IUtilisateurService {
 
 
 	@Override
-	public CompteCourant loadCpt(Long id_user) {
-		CompteCourant cpt = cptRep.getCompteByUser(id_user);
+	public List<CompteCourant> loadCpt(Long id_user) {
+		List<CompteCourant> cpt = cptRep.getCompteByUser(id_user);
         return cpt;
 	}
 

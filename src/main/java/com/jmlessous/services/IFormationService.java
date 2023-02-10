@@ -8,10 +8,10 @@ import com.jmlessous.entities.Formation;
 public interface IFormationService {
 	
 List<Formation> retrieveAllFormation();
-Formation retrieveFormation(String idFormation);
+Formation retrieveFormation(Long idFormation);
 Formation addFormation(Formation f);
 Formation updateFormation(Formation formation);
-void deleteFormation(String idFormation);
+void deleteFormation(Long idFormation);
 void SuppAllFormation();
 
 }

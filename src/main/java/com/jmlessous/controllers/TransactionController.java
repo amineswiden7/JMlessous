@@ -101,13 +101,22 @@ public class TransactionController {
 			public Transaction retrieveTransaction(@PathVariable("Transaction") Long TransactionId) {
 			return transactionService.AffTransaction(TransactionId);
 			}
-	//localhost:8083/JMLessous/retrieve-Transaction-by-rib/rib
+	//localhost:8083/JMLessous/retrieve-Transaction-by-cpt/16
+			@GetMapping("/retrieve-Transaction-by-cpt/{numCompte}")
+			@ResponseBody
+			public List<Transaction> getTransactionscpt (@PathVariable("numCompte") Long numCompte)
+			{
+				return transactionService.TransactionBycpt(numCompte);
+			}
+			
+			//localhost:8083/JMLessous/retrieve-Transaction-by-rib/rib
 			@GetMapping("/retrieve-Transaction-by-rib/{rib}")
 			@ResponseBody
 			public List<Transaction> getTransactions (@PathVariable("rib") String rib)
 			{
 				return transactionService.TransactionByRib(rib); 
 			}
+		
 	// http://localhost:8083/JMLessous/AnnulerTransaction
 			@PostMapping("/AnnulerTransaction")
 			@ResponseBody

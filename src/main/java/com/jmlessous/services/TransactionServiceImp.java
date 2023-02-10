@@ -198,6 +198,12 @@ public class TransactionServiceImp implements ITransactionService{
 	public List<Transaction> TransactionByRib(String rib) {
 		return (List<Transaction>) transrepo.getTransactionByRibAccount(rib);
 	}
+	
+	@Override
+	public List<Transaction> TransactionBycpt(Long numCompte) {
+		return (List<Transaction>) transrepo.gettrsBycpt(numCompte);
+	}
+
 
 	@Override
 	public void SuppTransaction(Long id) {
@@ -213,6 +219,7 @@ public class TransactionServiceImp implements ITransactionService{
 	public List<Transaction> TransactionParType (TypeTransaction typeTransaction) {
 		  return transrepo.findTransactionByTransactionType(typeTransaction);
 	}
+
 
 
 	

@@ -13,7 +13,7 @@ public interface IUtilisateurService {
     Utilisateur addUser(Utilisateur u);
     Utilisateur loadUser(Long id_user);
 
-    CompteCourant loadCpt(Long id_user);
+    List<CompteCourant> loadCpt(Long id_user);
 
     public List<Utilisateur> retrieveAllUtilisateur();
 
