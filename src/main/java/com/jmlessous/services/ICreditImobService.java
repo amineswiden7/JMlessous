@@ -18,7 +18,7 @@ public interface ICreditImobService {
     CreditImmobilier retrieveCreditById(Long id);
     float Calcul_mensualite(CreditImmobilier cr);
 
-    CreditImmobilier addCreditt (CreditImmobilier a , Long id_User);
+    CreditImmobilier addCreditt (CreditImmobilier a , Long id_User,Long idC);
 
     float calculTaux(CreditImmobilier a );
     float calculTauxSim(CreditImmobilier a);

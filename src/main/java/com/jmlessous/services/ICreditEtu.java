@@ -9,7 +9,7 @@ public interface ICreditEtu {
     List<CreditEtudiant> retrieveAllCredit();
 
 
-    CreditEtudiant addCredit(CreditEtudiant a , Long id_User);
+    CreditEtudiant addCredit(CreditEtudiant a , Long id_User,Long idC);
     CreditEtudiant addCreditSim(CreditEtudiant a );
     Amortissement Simulateurr(CreditEtudiant cr);
     Amortissement[] TabAmortissementt(CreditEtudiant cr);

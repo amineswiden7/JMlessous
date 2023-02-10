@@ -38,12 +38,12 @@ public class CreditEtuController {
 
 
     //http://localhost:8083/JMLessous/Credit/add-credit/{client-id}
-    @PostMapping("/add-credit/{id}")
+    @PostMapping("/add-credit/{id}/{idC}")
     @ResponseBody
-    public CreditEtudiant addCredit (@RequestBody CreditEtudiant c ,@PathVariable("id") Long id)
+    public CreditEtudiant addCredit (@RequestBody CreditEtudiant c ,@PathVariable("id") Long id,@PathVariable("idC") Long idC)
     {
 
-        return creditEtu.addCredit(c,id);
+        return creditEtu.addCredit(c,id,idC);
     }
 
 

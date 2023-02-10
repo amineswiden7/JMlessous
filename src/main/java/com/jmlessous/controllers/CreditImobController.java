@@ -32,12 +32,12 @@ public class CreditImobController {
     CreditImobRepository crr;
     Amortissement[] aaa ;
 
-    @PostMapping("/add-creditImob/{id}")
+    @PostMapping("/add-creditImob/{id}/{idC}")
     @ResponseBody
     @CrossOrigin(origins = "http://localhost:4200")
-    public CreditImmobilier addCredit(@RequestBody CreditImmobilier c, @PathVariable("id") Long id) {
+    public CreditImmobilier addCredit(@RequestBody CreditImmobilier c, @PathVariable("id") Long id,@PathVariable("idC")Long idC) {
         System.out.println(c);
-        return creditImobService.addCreditt(c, id);
+        return creditImobService.addCreditt(c, id,idC);
     }
 
     @GetMapping("/retrieve-all-credit")

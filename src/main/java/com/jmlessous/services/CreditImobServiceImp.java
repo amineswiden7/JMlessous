@@ -329,13 +329,13 @@ public class CreditImobServiceImp implements ICreditImobService {
     }
 
     @Override
-    public CreditImmobilier addCreditt(CreditImmobilier a, Long id_User) {
+    public CreditImmobilier addCreditt(CreditImmobilier a, Long id_User, Long idCom) {
         //CreditImmobilier ce = cr.getActiveCreditImobByUser(id_User);//
             a.setLeMontantDeLaTransaction(a.getApportPersonnel() + a.getMontantCredit());
             a.setDateDemande(new Date());
             float RatioAp = a.getApportPersonnel() / a.getLeMontantDeLaTransaction();
             Utilisateur uu = u.findById(id_User).orElse(null);
-            CompteCourant c = cp.getCompteByUser(id_User);
+            CompteCourant c = cp.findById(idCom).get();
             a.setCompteCredit(c);
             if (RatioAp < 0.2) {// loi de finance
                 System.out.println(RatioAp);

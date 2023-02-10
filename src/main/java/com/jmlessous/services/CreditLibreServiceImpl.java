@@ -65,9 +65,9 @@ public class CreditLibreServiceImpl implements ICreditLibreService {
 
     public CreditLibre addCreditLibre(CreditLibre credit, Long idUser, Long idGarantie) {
         Utilisateur u=user.findById(idUser).orElse(null);
-        CompteCourant c=compte.getCompteByUser(idUser);
+        //CompteCourant c=compte.getCompteByUser(idUser);
         Garantie g = garantie.findById(idGarantie).orElse(null);
-        credit.setCompteCredit(c);
+       // credit.setCompteCredit(c);
         credit.setDateDemande(new Date());
         float montant=credit.getMontantCredit();
 
