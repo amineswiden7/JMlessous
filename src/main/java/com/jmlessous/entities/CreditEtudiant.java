@@ -20,5 +20,6 @@ public class CreditEtudiant extends Credit implements Serializable {
     private Float salaireParental ;
     @Enumerated(EnumType.STRING)
     private NiveauEtude niveauEtude;
+    double Score;
 
 }

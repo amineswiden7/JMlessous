@@ -3,18 +3,22 @@ package com.jmlessous.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.jmlessous.entities.Formation;
 import com.jmlessous.services.IFormationService;
 
+@CrossOrigin(origins = "http://localhost:4200")
+@RequestMapping("/Formation")
 @RestController
 public class FormationController {
 	@Autowired
@@ -31,7 +35,7 @@ public class FormationController {
 	// http://localhost:8083/JMLessous/retrieve-formation/1
 				@GetMapping("/retrieve-formation/{formation-id}")
 				@ResponseBody
-				public Formation retrieveFormation(@PathVariable("fund-id") String formationId) {
+				public Formation retrieveFormation(@PathVariable("formation-id") Long formationId) {
 				return formser.retrieveFormation(formationId);
 				}
 
@@ -48,7 +52,7 @@ public class FormationController {
 	// http://localhost:8083/JMLessous/remove-formation/3
 				@DeleteMapping("/remove-formation/{formation-id}")
 				@ResponseBody
-				public void removeFund(@PathVariable("fund-id") String formationId) {
+				public void removeFund(@PathVariable("formation-id") Long formationId) {
 					formser.deleteFormation(formationId);
 				}
 				

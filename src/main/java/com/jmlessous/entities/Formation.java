@@ -21,14 +21,14 @@ public class Formation implements Serializable {
     @Column(name ="idFormation ")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idFormation ;
-
-    private String  Intitulé;
-    private String  description  ;
     @Temporal (TemporalType.DATE)
-    private Date dateDebut;
-    @Temporal (TemporalType.DATE)
-    private Date dateFin;
-    private String localisation ;
+    private Date datedebut;
+    private String localisation;
+    private String intitule;
+    private String description;
+    private String categorie;
+    private String duree;
+   
     @ManyToMany()
     private Set<Utilisateur> utilisateursFormation;
 }

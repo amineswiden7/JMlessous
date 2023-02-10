@@ -1,7 +1,9 @@
 package com.jmlessous.services;
 
+
 import com.jmlessous.entities.*;
 import com.jmlessous.repositories.AbsenceRepository;
+
 import com.jmlessous.repositories.CompteCourantRepository;
 import com.jmlessous.repositories.UtilisateurRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +17,10 @@ public class UtilisateurServiceImpl implements IUtilisateurService {
     @Autowired
     UtilisateurRepository userRep;
     @Autowired
+
     AbsenceRepository AbsRep;
     @Autowired
+
     CompteCourantRepository cptRep;
     @Autowired
     private PasswordEncoder bcryptEncoder;
@@ -41,16 +45,24 @@ public class UtilisateurServiceImpl implements IUtilisateurService {
         return user;
     }
 
+
+	@Override
+	public List<CompteCourant> loadCpt(Long id_user) {
+		List<CompteCourant> cpt = cptRep.getCompteByUser(id_user);
+        return cpt;
+	}
+
     @Override
     public List<Utilisateur> retrieveAllUtilisateur() {
         return (List<Utilisateur>) userRep.findAll();
     }
 
+
     @Override
-    public float affecterSalaire(Long id_user) {
+    public float affecterSalaire(Long id_user , String rib) {
        List<Absence> ab = AbsRep.getAbsenceByIdUser(id_user);
        Utilisateur u=userRep.findById(id_user).orElse(null);
-       CompteCourant cp= cptRep.getCompteByUser(id_user);
+       CompteCourant cp= cptRep.getcptByRib(rib);
        float solde =cp.getSolde();
        float salaireParJour=u.getSalaire()/30;
         float salaire=u.getSalaire();
@@ -67,5 +79,6 @@ public class UtilisateurServiceImpl implements IUtilisateurService {
 
         return salaire;
     }
+
 
 }

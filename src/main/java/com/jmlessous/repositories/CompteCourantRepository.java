@@ -16,7 +16,11 @@ import com.jmlessous.entities.Utilisateur;
 public interface CompteCourantRepository extends CrudRepository<CompteCourant,Long>{
 
     @Query("SELECT c FROM CompteCourant  c WHERE c.utilisateurC.idUser= :id")
-    CompteCourant getCompteByUser(@Param("id") Long idUser);
+    List<CompteCourant> getCompteByUser(@Param("id") Long idUser);
+    
+
+	@Query("SELECT c FROM CompteCourant c WHERE c.rib= :rib")
+	List<CompteCourant> getcptByRib(@Param("rib") String rib);
 
 //	@Query("SELECT t FROM User t WHERE t.utilisateurC.email= :email")
 //	List<Transaction> getUserByEmail(@Param("email") String email);

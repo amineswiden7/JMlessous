@@ -95,9 +95,8 @@ public class TransactionServiceImp implements ITransactionService{
 		}
 		else
 		{
-			code_tr=0;
-		}
-		
+		code_tr=0;
+	}		
 		return code_tr ;  
 	}
 	
@@ -115,6 +114,63 @@ public class TransactionServiceImp implements ITransactionService{
 		return "Transaction non approuvée" ; 		 
 	    }
 	}
+	
+	@Override
+	public String approveTransactionAng(Transaction s, Long code) throws MessagingException, javax.mail.MessagingException {
+		if(addTransaction(s)==code) 
+		{
+		transrepo.save(s);
+		return "transaction approuveé" ; 
+		}
+		else 
+		{
+		return "Transaction non approuvée" ; 		 
+	    }
+	}
+	
+	@Override
+	public int addTransactionInter(Transaction s) throws MessagingException, javax.mail.MessagingException {
+		Compte acc_emet = accrepo.findByIban(s.getEmetteur());
+		Compte acc_dest = accrepo.findByIban(s.getDestinataire());
+	
+		int code_tr = sendAttachmentEmail(acc_emet.getUtilisateurC().getEmail()) ;  
+		this.code=code_tr;
+		if  (s.getMontant() < acc_emet.getSolde())  
+		 {
+			acc_emet.setSolde(acc_emet.getSolde()- s.getMontant());
+			s.setComptesTransaction(acc_emet);
+			s.setDateTransaction(new Date());
+			acc_dest.setSolde(acc_dest.getSolde()+s.getMontant());
+		}
+		else
+		{
+		code_tr=0;
+	}
+		
+		return code_tr ;  
+	}
+
+	@Override
+	public String approveTransactionInter(Transaction s) throws MessagingException, javax.mail.MessagingException {
+		if(addTransactionInter(s)==code)
+		{
+		transrepo.save(s);
+		return "Transaction Internationale approuvée " ; 
+		}
+		else 
+		{
+		return "Transaction Internationale non approuvée" ; 		 
+	    }
+	}
+
+	@Override
+	public String approveTransactionAngInter(Transaction s, Long code)
+			throws MessagingException, javax.mail.MessagingException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
 
 	@Override
 	public Transaction AnnulerTransaction(Transaction t) {
@@ -142,6 +198,12 @@ public class TransactionServiceImp implements ITransactionService{
 	public List<Transaction> TransactionByRib(String rib) {
 		return (List<Transaction>) transrepo.getTransactionByRibAccount(rib);
 	}
+	
+	@Override
+	public List<Transaction> TransactionBycpt(Long numCompte) {
+		return (List<Transaction>) transrepo.gettrsBycpt(numCompte);
+	}
+
 
 	@Override
 	public void SuppTransaction(Long id) {
@@ -157,5 +219,9 @@ public class TransactionServiceImp implements ITransactionService{
 	public List<Transaction> TransactionParType (TypeTransaction typeTransaction) {
 		  return transrepo.findTransactionByTransactionType(typeTransaction);
 	}
+
+
+
+	
 	
 }
