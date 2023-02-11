@@ -70,6 +70,7 @@ public class CreditLibreServiceImpl implements ICreditLibreService {
     @Transactional
     public CreditLibre addCreditLibre(CreditLibre credit,Long idCpt, Long idUser,Garantie garantie) {
         Utilisateur u=user.findById(idUser).orElse(null);
+
         CompteCourant c=compte.findById(idCpt).orElse(null);
         //Garantie g = credit.getGarantie();
         //g.setCredit(credit);
@@ -77,6 +78,11 @@ public class CreditLibreServiceImpl implements ICreditLibreService {
         //credit.setGarantie(g);
 
         credit.setCompteCredit(c);
+
+        //CompteCourant c=compte.getCompteByUser(idUser);
+        //  Garantie g = garantie.findById(idGarantie).orElse(null);
+       // credit.setCompteCredit(c);
+
         credit.setDateDemande(new Date());
         float montant=credit.getMontantCredit();
 

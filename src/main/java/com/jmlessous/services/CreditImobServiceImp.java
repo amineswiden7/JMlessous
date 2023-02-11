@@ -329,15 +329,18 @@ public class CreditImobServiceImp implements ICreditImobService {
     }
 
     @Override
-    public CreditImmobilier addCreditt(CreditImmobilier a, Long id_User) {
+    public CreditImmobilier addCreditt(CreditImmobilier a, Long id_User, Long idCom) {
         //CreditImmobilier ce = cr.getActiveCreditImobByUser(id_User);//
             a.setLeMontantDeLaTransaction(a.getApportPersonnel() + a.getMontantCredit());
             a.setDateDemande(new Date());
             float RatioAp = a.getApportPersonnel() / a.getLeMontantDeLaTransaction();
             Utilisateur uu = u.findById(id_User).orElse(null);
-            CompteCourant c = (CompteCourant) cp.getCompteByUser(id_User);
+
+            CompteCourant c = cp.findById(idCom).get();
+
             a.setCompteCredit(c);
             if (RatioAp < 0.2) {// loi de finance
+                System.out.println(RatioAp);
                 a.setSTATUS(Status.REFUS);
                 a.setFinC(Boolean.TRUE);
                 return a;
@@ -348,6 +351,7 @@ public class CreditImobServiceImp implements ICreditImobService {
                         a.setTauxNominal((float) 0.05);
                         a.setMensualite(Calcul_mensualite(a));
                         float NouTaux = calculTaux(a);
+                        System.out.println(NouTaux);
                         if (NouTaux == -1) {
                             a.setSTATUS(Status.REFUS);
                             System.out.println("tesssst");
@@ -362,19 +366,22 @@ public class CreditImobServiceImp implements ICreditImobService {
 
 
                             }
-
+                            System.out.println("bechir");
+                            System.out.println(a.getMontantmensuelpretpayer() - Calcul_mensualite(a));
                             if (a.getMontantmensuelpretpayer() - Calcul_mensualite(a) >= 0) {
+                                System.out.println("aloo");
                                 a.setMensualite(Calcul_mensualite(a));
                                 a.setSTATUS(Status.ENCOURSDETRAITEMENT);
-                            } else
+                            }
+                            else {
                                 System.out.println(a.getMontantmensuelpretpayer());
-                            System.out.println(Calcul_mensualite(a));
+                                System.out.println(Calcul_mensualite(a));
 
                                 System.out.println("tesssst1");
 
                                 a.setSTATUS(Status.REFUS);
-                            a.setFinC(Boolean.TRUE);
-
+                                a.setFinC(Boolean.TRUE);
+                            }
 
                         }
 
@@ -760,7 +767,7 @@ public class CreditImobServiceImp implements ICreditImobService {
             cp.save(com);
             SimpleMailMessage message = new SimpleMailMessage();
 
-            message.setFrom("bkfinpi@gmail.com");
+            message.setFrom("bechir.jlidi@esprit.tn");
             message.setTo(com.getUtilisateurC().getEmail());
             message.setText("votre demande de prêt a été acceptée");
             message.setSubject("service de credit ");
