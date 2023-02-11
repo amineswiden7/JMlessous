@@ -9,7 +9,7 @@ public interface IGarantieService {
 
     Garantie addGarantie(Garantie a );
 
-
+   Garantie getGarantie(Long idCredit);
     public void deleteGarantie(Long idGarantie);
     Garantie updateGarantie(Garantie a,Long idGarantie );
 }

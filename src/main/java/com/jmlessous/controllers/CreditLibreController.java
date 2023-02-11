@@ -36,6 +36,13 @@ public class CreditLibreController
         List <CreditLibre> list=creditLibre.listCreditLibreByClient(idUser);
         return list ;
     }
+    //http://localhost:8083/JMLessous/CreditLibreID/{idCredit}
+    @GetMapping("/CreditLibreID/{idCredit}")
+    @ResponseBody
+    public CreditLibre getCreditLibre(@PathVariable("idCredit") Long idCredit) {
+       CreditLibre list=creditLibre.getCreditLibreByID(idCredit);
+        return list ;
+    }
 
     //http://localhost:8083/JMLessous/ListCreditLibreStatus/{status}
     @GetMapping("/ListCreditLibreStatus/{status}")
@@ -54,11 +61,14 @@ public class CreditLibreController
 
     //http://localhost:8083/JMLessous/AddCreditLibre
 
-    @PostMapping("/AddCreditLibre/{idUser}/{idGarantie}")
+    @PostMapping("/AddCreditLibre/{valeur}/{type}/{idUser}/{idCpt}")
     @ResponseBody
-    public CreditLibre AddAccount (@RequestBody CreditLibre c ,@PathVariable("idUser") Long idUser,@PathVariable("idGarantie") Long idGarantie)
+    public CreditLibre AddAccount (@RequestBody CreditLibre c ,@PathVariable("valeur") Float valeur, @PathVariable("type") String type ,@PathVariable("idUser") Long idUser,@PathVariable("idCpt") Long idCpt)
     {
-        return creditLibre.addCreditLibre(c,idUser,idGarantie);
+        Garantie g=new Garantie();
+        g.setValeur(valeur);
+        g.setType(type);
+        return creditLibre.addCreditLibre(c,idCpt,idUser,g);
 
     }
 
@@ -78,20 +88,23 @@ public class CreditLibreController
 
 
 
-    @GetMapping("/simulateur/{montant}/{duree}/{taux}")
-    public Amortissement Simulation(@PathVariable("montant") float montant, @PathVariable("duree") float duree, @PathVariable("taux") float taux ){
+    @PostMapping("/simulateur/{montant}/{duree}/{salaire}")
+    public Amortissement Simulation(@PathVariable("montant") float montant, @PathVariable("duree") float duree,@PathVariable("salaire") float salaire ,@RequestBody Garantie garantie){
        CreditLibre cr=new CreditLibre();
-       cr.setTauxInteret(taux);
+       //cr.setTauxInteret(taux);
        cr.setMontantCredit(montant);
        cr.setDuree(duree);
-        return creditLibre.Simulateur(cr);
+        return creditLibre.Simulateur(cr,garantie,salaire);
     }
 
-    @PostMapping("/tabAmortissement")
+    @PostMapping("/tabAmortissement/{valeur}/{type}/{salaire}")
     @ResponseBody
-    public Amortissement[] Simulation(@RequestBody CreditLibre cr)
+    public Amortissement[] Simulation(@RequestBody CreditLibre cr,@PathVariable("valeur") float valeur,@PathVariable("type") String type,@PathVariable("salaire") float salaire)
     {
-        return creditLibre.TabAmortissement(cr);
+        Garantie g = new Garantie();
+        g.setValeur(valeur);
+        g.setType(type);
+        return creditLibre.TabAmortissement(cr,g,salaire);
 
     }
 

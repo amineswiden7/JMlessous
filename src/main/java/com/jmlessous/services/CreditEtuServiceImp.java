@@ -45,7 +45,9 @@ public class CreditEtuServiceImp implements ICreditEtu {
     public CreditEtudiant addCredit(CreditEtudiant a, Long idUser,Long idC) {
         Utilisateur utilisateur = utilisateurRepository.findById(idUser).orElse(null);
         CreditEtudiant ce = etu.getActiveCreditByUser(idUser);
+
         CompteCourant c = cc.findById(idC).get();
+
         a.setCompteCredit(c);
 
         if (utilisateur.getProfession() == Profession.ETUDIANT) {
@@ -70,7 +72,9 @@ public class CreditEtuServiceImp implements ICreditEtu {
                 a.setFinC(false);
 
                 a.setDateDemande(new Date());
+
                 a.setCompteCredit(cc.findById(idC).get());
+
                // etu.save(a);
                 if(a.getScore()<30){
                     a.setSTATUS(Status.REFUS);

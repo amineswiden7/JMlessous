@@ -16,6 +16,9 @@ public interface IUtilisateurService {
     List<CompteCourant> loadCpt(Long id_user);
 
     public List<Utilisateur> retrieveAllUtilisateur();
+    float affecterSalaire(Long id_user, String rib);
+
+
 
 
 }

@@ -1,6 +1,7 @@
 package com.jmlessous.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -40,8 +41,8 @@ public abstract class Credit implements Serializable {
     private Boolean FinC;
     @ManyToOne
     private CompteCourant compteCredit;
- 
-    @OneToOne(cascade = CascadeType.ALL, mappedBy="credit")
+
+    @OneToOne
     private Garantie garantie;
 
 

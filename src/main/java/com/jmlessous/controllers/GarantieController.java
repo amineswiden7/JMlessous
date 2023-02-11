@@ -21,10 +21,17 @@ public class GarantieController {
     @GetMapping("/ListGarantie")
     @ResponseBody
     public List<Garantie> getAllAcounts() {
-        List <Garantie> list=garantieService.retrieveAllAbsences();
+        List<Garantie> list = garantieService.retrieveAllAbsences();
+        return list;
+
+    }
+    //http://localhost:8083/JMLessous/GetGarantie/{id}
+    @GetMapping("/GetGarantie/{id}")
+    @ResponseBody
+    public Garantie getCredit(@PathVariable("id") Long id) {
+       Garantie list=garantieService.getGarantie(id);
         return list ;
     }
-
     //http://localhost:8083/JMLessous/AddGarantie
     @PostMapping("/AddGarantie")
     @ResponseBody
