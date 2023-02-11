@@ -335,7 +335,7 @@ public class CreditImobServiceImp implements ICreditImobService {
             a.setDateDemande(new Date());
             float RatioAp = a.getApportPersonnel() / a.getLeMontantDeLaTransaction();
             Utilisateur uu = u.findById(id_User).orElse(null);
-            CompteCourant c = cp.getCompteByUser(id_User);
+            CompteCourant c = (CompteCourant) cp.getCompteByUser(id_User);
             a.setCompteCredit(c);
             if (RatioAp < 0.2) {// loi de finance
                 a.setSTATUS(Status.REFUS);

@@ -22,11 +22,11 @@ public class UtilisateurController {
     {
         return utilisateurService.addUser(c);
     }
-    @GetMapping("/affecterSalaire/{id}")
+    @GetMapping("/affecterSalaire/{id}/{rib}")
     @ResponseBody
-    public float affecterSalaire (@PathVariable("id") Long id)
+    public float affecterSalaire (@PathVariable("id") Long id,@PathVariable("rib") String rib)
     {
-        return utilisateurService.affecterSalaire(id);
+        return utilisateurService.affecterSalaire(id,rib);
     }
     @GetMapping("/ListUser")
     @ResponseBody

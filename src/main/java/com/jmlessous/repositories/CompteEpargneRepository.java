@@ -17,5 +17,5 @@ public interface CompteEpargneRepository extends CrudRepository<CompteEpargne,Lo
 	
 	//List<CompteEpargne> findByNatureEpargne(NatureEpargne natureepargne);
 	   @Query("SELECT ce FROM CompteEpargne  ce WHERE ce.utilisateurC.idUser= :id")
-	    List<CompteEpargne> getCompteEByUser(@Param("id") Long idUser);
+	    CompteEpargne getCompteEByUser(@Param("id") Long idUser);
 }

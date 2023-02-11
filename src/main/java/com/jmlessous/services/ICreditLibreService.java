@@ -18,7 +18,7 @@ public interface ICreditLibreService
     CreditLibre getCreditLibreByID(Long idCredit);
     List<CreditLibre> listCreditLibreByStatus(Status status);
     CreditLibre accepterCreditLibre(Long idCredit , Status status);
-    CreditLibre addCreditLibre(CreditLibre credit , Long idUser,Garantie garantie);
+    CreditLibre addCreditLibre(CreditLibre credit ,Long idCpt, Long idUser,Garantie garantie);
 
     public Amortissement[] TabAmortissement(CreditLibre cr, Garantie garantie, float salaire);
     public Amortissement Simulateur(CreditLibre credit, Garantie garantie, float salaire);

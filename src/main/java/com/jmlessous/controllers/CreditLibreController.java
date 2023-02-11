@@ -61,14 +61,14 @@ public class CreditLibreController
 
     //http://localhost:8083/JMLessous/AddCreditLibre
 
-    @PostMapping("/AddCreditLibre/{valeur}/{type}/{idUser}")
+    @PostMapping("/AddCreditLibre/{valeur}/{type}/{idUser}/{idCpt}")
     @ResponseBody
-    public CreditLibre AddAccount (@RequestBody CreditLibre c ,@PathVariable("valeur") Float valeur, @PathVariable("type") String type ,@PathVariable("idUser") Long idUser)
+    public CreditLibre AddAccount (@RequestBody CreditLibre c ,@PathVariable("valeur") Float valeur, @PathVariable("type") String type ,@PathVariable("idUser") Long idUser,@PathVariable("idCpt") Long idCpt)
     {
         Garantie g=new Garantie();
         g.setValeur(valeur);
         g.setType(type);
-        return creditLibre.addCreditLibre(c,idUser,g);
+        return creditLibre.addCreditLibre(c,idCpt,idUser,g);
 
     }
 

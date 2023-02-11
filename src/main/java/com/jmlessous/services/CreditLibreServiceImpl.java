@@ -68,9 +68,9 @@ public class CreditLibreServiceImpl implements ICreditLibreService {
 
     @Override
     @Transactional
-    public CreditLibre addCreditLibre(CreditLibre credit, Long idUser,Garantie garantie) {
+    public CreditLibre addCreditLibre(CreditLibre credit,Long idCpt, Long idUser,Garantie garantie) {
         Utilisateur u=user.findById(idUser).orElse(null);
-        CompteCourant c=compte.getCompteByUser(idUser);
+        CompteCourant c=compte.findById(idCpt).orElse(null);
         //Garantie g = credit.getGarantie();
         //g.setCredit(credit);
         //credit.getGarantie().setCredit(credit);
