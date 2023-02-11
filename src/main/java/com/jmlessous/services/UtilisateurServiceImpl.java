@@ -63,6 +63,7 @@ public class UtilisateurServiceImpl implements IUtilisateurService {
        List<Absence> ab = AbsRep.getAbsenceByIdUser(id_user);
        Utilisateur u=userRep.findById(id_user).orElse(null);
        CompteCourant cp= cptRep.getcptByRib(rib);
+       System.out.println(cp);
        float solde =cp.getSolde();
        float salaireParJour=u.getSalaire()/30;
         float salaire=u.getSalaire();
